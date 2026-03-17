@@ -1,0 +1,114 @@
+{{Infobox country
+| conventional_long_name = Lebanese Republic
+| native_name            = {{native name|ar|الجمهورية اللبنانية}}<br />{{transliteration|ar|al-Jumhūriyyah al-Lubnāniyyah}}
+| common_name            = Lebanon
+| image_flag             = Flag of Lebanon.svg
+| image_coat             = <!--Do not put the [[coat of arms of Lebanon]] since it's unofficial.-->
+| symbol_type            = 
+| national_anthem        = {{ubl|{{lang|ar|{{Script/Arabic|كلّنا للوطن}}|rtl=yes}}|{{Transliteration|ar|[[National Anthem of Lebanon|Kullunā li-l-waṭan]]}}|"All of us, for our country!"{{parabr}}{{center|[[File:Lebanese national anthem.ogg]]}}}}
+| image_map              = Lebanon (orthographic_projection).svg
+| image_map_caption      = Location of Lebanon (in green)
+| image_map2             = Lebanon - Location Map_(2012)_-_LBN_-_UNOCHA.svg
+| capital                = [[Beirut]]
+| coordinates            = {{Coord|33|54|N|35|32|E|type:city}}
+| largest_city           = [[Beirut]]
+| official_languages     = [[Arabic]]<ref name="article_11"/>
+| languages              = [[Lebanese Arabic]]<ref>{{Cite book |last=Simpson |first=Andrew |url=https://books.google.com/books?id=kpSBDwAAQBAJ&dq=lebanese+arabic+lebanon+language+and+society+an+introduction&pg=PT21 |title=Language and Society: An Introduction |date=2 January 2019 |publisher=Oxford University Press |isbn=978-0-19-094020-1 |language=en}}</ref>
+| languages_type         = Local vernacular
+| languages2_type        = Recognised minority language
+| languages2             = [[French language|French]]{{efn|Article 11 of the [[Constitution of Lebanon]] states: "Arabic is the official national language. A law shall determine the cases in which the French language can be used." See [[French language in Lebanon]].}}
+| demonym                = [[Lebanese people|Lebanese]]
+| government_type        = [[Unitary parliamentary republic]] under [[confessionalism (politics)|confessionalism]]<ref name="constitution">{{cite web |title=The Lebanese Constitution |publisher=Presidency of Lebanon |url=http://presidency.gov.lb/English/LebaneseSystem/Documents/Lebanese%20Constitution.pdf |access-date=20 August 2011 |url-status=dead |archive-url=https://web.archive.org/web/20120119201440/http://presidency.gov.lb/English/LebaneseSystem/Documents/Lebanese%20Constitution.pdf |archive-date=19 January 2012}}</ref>
+| leader_title1          = [[President of Lebanon|President]]
+| leader_name1           = [[Joseph Aoun]]
+| leader_title2          = [[Prime Minister of Lebanon|Prime Minister]]
+| leader_name2           = [[Nawaf Salam]]
+| leader_title3          = [[Legislative Speaker of Lebanon|Speaker of the Parliament]]
+| leader_name3           = [[Nabih Berri]]
+| legislature            = [[Parliament of Lebanon|Parliament]]
+| established_event1     = [[Emirate of Mount Lebanon]]
+| established_date1      = 1516
+| established_event2     = [[Double Qaim-Maqamate of Mount Lebanon]]
+| established_date2      = 1 December 1843
+| established_event3     = [[Mount Lebanon Mutasarrifate]]
+| established_date3      = 9 June 1861
+| established_event4     = [[Greater Lebanon]]
+| established_date4      = 1 September 1920
+| established_event5     = [[Constitution of Lebanon|Constitution]]
+| established_date5      = 23 May 1926
+| established_event6     = Independence declared
+| established_date6      = 22 November 1943
+| established_event7     = [[Mandate for Syria and the Lebanon|French mandate]] ended
+| established_date7      = 24 October 1945
+| established_event8     = Withdrawal of [[Allies of World War II|French forces]]
+| established_date8      = 17 April 1946
+| established_event9     = [[Israeli occupation of Southern Lebanon#Withdrawal from South Lebanon (1999–2000)|Israeli troops withdrawn]]
+| established_date9      = 24 May 2000
+| established_event10    = [[Cedar Revolution#Withdrawal of Syrian troops|Syrian troops withdrawn]]
+| established_date10     = 30 April 2005
+| area_km2               = 10452
+| area_label             = Total
+| area_rank              = 161st <!-- Area rank should match [[List of countries and dependencies by area]] -->
+| area_sq_mi             = 4036
+| percent_water          = 1.8
+| population_estimate    = 5,364,482<ref>{{Cite CIA World Factbook |country=Lebanon |access-date=6 December 2024}}</ref>
+| population_estimate_year = 2024
+| population_estimate_rank = 117th
+| population_density_km2 = 513
+| population_density_sq_mi = 1,329
+| GDP_PPP                = {{increase}} $78.233 billion<ref name="IMFWEO.LB">{{cite web |url=https://www.imf.org/en/Publications/WEO/weo-database/2023/October/weo-report?c=446,&s=NGDPD,PPPGDP,NGDPDPC,PPPPC,&sy=2020&ey=2028&ssm=0&scsm=1&scc=0&ssd=1&ssc=0&sic=0&sort=country&ds=.&br=1 |title=World Economic Outlook Database, October 2023 Edition. (Lebanon) |publisher=[[International Monetary Fund]] |date=10 October 2023 |access-date=15 October 2023 |archive-date=17 October 2023 |archive-url=https://web.archive.org/web/20231017114626/https://www.imf.org/en/Publications/WEO/weo-database/2023/October/weo-report?c=446,&s=NGDPD,PPPGDP,NGDPDPC,PPPPC,&sy=2020&ey=2028&ssm=0&scsm=1&scc=0&ssd=1&ssc=0&sic=0&sort=country&ds=.&br=1 |url-status=live}}</ref>
+| GDP_PPP_year           = 2022
+| GDP_PPP_rank           = 108th
+| GDP_PPP_per_capita     = {{increase}} $11,793<ref name="IMFWEO.LB" />
+| GDP_PPP_per_capita_rank = 114th
+| GDP_nominal            = {{increase}} $21.780 billion<ref name="IMFWEO.LB" />
+| GDP_nominal_year       = 2022
+| GDP_nominal_rank       = 103rd
+| GDP_nominal_per_capita = {{increase}} $3,283<ref name="IMFWEO.LB" />
+| GDP_nominal_per_capita_rank = 133rd
+| Gini                   = 31.8 <!--number only-->
+| Gini_year              = 2011
+| Gini_change            = decrease<!--increase/decrease/steady-->
+| Gini_ref               = <ref name="wb-gini">{{cite web |url=https://www.cia.gov/the-world-factbook/field/gini-index-coefficient-distribution-of-family-income/country-comparison/ |title=Gini Index coefficient |publisher=CIA World Factbook |access-date=16 July 2021 |archive-date=17 July 2021 |archive-url=https://web.archive.org/web/20210717071854/https://www.cia.gov/the-world-factbook/field/gini-index-coefficient-distribution-of-family-income/country-comparison |url-status=dead}}</ref>
+| HDI                    = 0.752 <!--number only-->
+| HDI_year               = 2023<!-- Please use the year to which the data refers, not the publication year-->
+| HDI_change             = increase<!--increase/decrease/steady-->
+| HDI_ref                = <ref name="UNHDR">{{Cite web |date=6 May 2025 |title=Human Development Report 2025 |url=https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |url-status=live |archive-url=https://web.archive.org/web/20250506051232/https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |archive-date=6 May 2025 |access-date=6 May 2025 |publisher=[[United Nations Development Programme]] |language=en}}</ref>
+| HDI_rank               = 102nd
+| currency               = [[Lebanese pound]]
+| currency_code          = LBP
+| time_zone              = [[Eastern European Time|EET]]
+| utc_offset             = +2
+| utc_offset_DST         = +3
+| time_zone_DST          = [[Eastern European Summer Time|EEST]]
+| drives_on              = Right<ref>{{cite web |url=http://www.adcidl.com/Driving-in-Lebanon.html |title=Driving in Lebanon |publisher=adcidl.com |access-date=17 January 2013 |archive-url=https://web.archive.org/web/20130117000049/http://www.adcidl.com/Driving-in-Lebanon.html |archive-date=17 January 2013 |url-status=live}}</ref>
+| calling_code           = [[Telephone numbers in Lebanon|+961]]<ref name="cia2" />
+| cctld                  = {{ublist |[[.lb]] |{{lang|ar|[[Internationalized country code top-level domain|.لبنان]]}}}}
+| ethnic_groups          = {{unbulleted list
+| 95% [[Arabs|Arab]]{{efn|The [[Maronite]] and [[Melkite]] communities are known to oppose being characterized as Arab.}}<ref name="Khashan 723–744">{{Cite journal |last=Khashan |first=Hilal |date=December 1990 |title=The Political Values of Lebanese Maronite College Students |url=https://www.jstor.org/stable/174186 |journal=The Journal of Conflict Resolution |volume=34 |issue=4 |pages=723–744 |doi=10.1177/0022002790034004007 |jstor=174186 |s2cid=145632505 |quote=The heritage of the Maronites is perceived as anything Phoenician, Greco-Roman, Mediterranean, or internationalist, but not Arab. |url-access=subscription}}</ref>
+| 4% [[Armenians in Lebanon|Armenian]]
+| 1% [[Demographics of Lebanon|others]]
+}}
+| ethnic_groups_year     = 2021
+| ethnic_groups_ref      = <ref name="cia2"/>
+| religion               = {{unbulleted list
+|{{Tree list}}
+* 53.31% [[Islam in Lebanon|Islam]]
+** 26.84% [[Lebanese Shia Muslims|Shia]]
+*** 0.64% [[Alawite]]
+** 26.55% [[Lebanese Sunni Muslims|Sunni]]
+{{Tree list/end}}
+|{{Tree list}}
+* 41.40% [[Christianity in Lebanon|Christianity]]
+** 28.11% [[Catholic Church in Lebanon|Catholic]]
+** 8.30% [[Lebanese Greek Orthodox Christians|Orthodox]]
+** 2.92% [[Armenian Apostolic Church|Armenian Apostolic]]
+** 0.53% [[Lebanese Protestant Christians|Protestant]]
+** 1.64% Other [[Christians]]
+{{Tree list/end}}
+|5.21% [[Lebanese Druze|Druze]]
+|0.08% [[Irreligion in Lebanon|No religion]]
+}}
+| religion_year          = 2024
+| religion_ref           = <ref>{{cite web |author=[[International Foundation for Electoral Systems]] |date=September 2011 |title=Overview of the current 26 electoral districts |url=https://www.undp.org/sites/g/files/zskgke326/files/2022-12/2022-parliamentary%20elections%20key%20results%20brochure%20WEB.pdf}}</ref><ref name=files>[http://www.lebanonfiles.com/news/1301866?mobile=no دراسة نقدية في قانون الانتخاب النسبي]. Lebanon Files</ref>
+}}

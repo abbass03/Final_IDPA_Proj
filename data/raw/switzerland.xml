@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<country>
+    <name>Switzerland</name>
+    <official_name>Swiss Confederation</official_name>
+    <capital>Bern</capital>
+    <largest_city>Zurich</largest_city>
+    <government>
+        <type>Federal directorial republic</type>
+        <president>Karin Keller-Sutter</president>
+        <vice_president>Guy Parmelin</vice_president>
+    </government>
+</country>

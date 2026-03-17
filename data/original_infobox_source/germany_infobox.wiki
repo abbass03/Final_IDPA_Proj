@@ -1,0 +1,64 @@
+{{Infobox country
+| conventional_long_name = Federal Republic of Germany
+| common_name            = Germany
+| native_name            = {{lang|de|Bundesrepublik Deutschland}}
+| image_flag             = Flag of Germany.svg
+| image_coat             = Coat of arms of Germany.svg
+| coa_size               = 70
+| national_anthem        = {{lang|de|"[[Das Lied der Deutschen]]"|italics=no}}{{efn|From 1952 to 1990, the entire "{{lang|de|Das Lied der Deutschen|italic=no}}" was the national anthem, but only the third verse was sung on official occasions. Since 1991, the third verse alone has been the national anthem.<ref name="PresidentsOffice">{{cite web|url=http://www.bundespraesident.de/DE/Amt-und-Aufgaben/Wirken-im-Inland/Repraesentation-und-Integration/repraesentation-und-integration-node.html|title=Repräsentation und Integration|publisher=[[Bundespräsidialamt]]|language=de|url-status=live|archiveurl=https://web.archive.org/web/20160307221541/http://www.bundespraesident.de/DE/Amt-und-Aufgaben/Wirken-im-Inland/Repraesentation-und-Integration/repraesentation-und-integration-node.html|archivedate=7 March 2016|accessdate=8 March 2016}}</ref>}}<br />''The Song of the Germans''<br /><div style="display:inline-block;margin-top:0.4em;">{{center|[[File:Nationalhymne der Bundesrepublik Deutschland.ogg]]}}</div>
+| image_map              = {{switcher|[[File:EU-Germany (orthographic projection).svg|frameless]]|Germany on the globe centred on Europe|[[File:EU-Germany.svg|frameless]]|Show map of the [[European Union]]|default=1}}
+| map_width              = 250px
+| capital                = [[Berlin]]{{efn|Berlin is the sole constitutional capital and ''de jure'' seat of government, but the former provisional capital of the Federal Republic of Germany, [[Bonn]], has the special title of "federal city" ({{lang|de|Bundesstadt}}) and is the primary seat of six ministries.<ref>{{cite web|url=https://www.deutschland.de/en/topic/politics/the-german-federal-government|website=deutschland.de|title=The German Federal Government|date=23 January 2018|archiveurl=https://web.archive.org/web/20200430004825/https://www.deutschland.de/en/topic/politics/the-german-federal-government|archivedate=30 April 2020|url-status=live}}</ref>}}
+| coordinates            = {{Coord|52|31|N|13|23|E|type:city}}
+| largest_city           = capital
+| official_languages     = [[German language|German]]{{efn|[[Danish language|Danish]], [[Low German]], [[Sorbian languages|Sorbian]], [[Romani language|Romani]], and [[Frisian languages|Frisian]] are recognised by the [[European Charter for Regional or Minority Languages]].<ref>{{cite web|url=https://blogs.loc.gov/law/2018/09/the-protection-of-minority-and-regional-languages-in-germany/|publisher=Library of Congress|last=Gesley|first=Jenny|title=The Protection of Minority and Regional Languages in Germany|date=26 September 2018|archiveurl=https://web.archive.org/web/20200525092638/https://blogs.loc.gov/law/2018/09/the-protection-of-minority-and-regional-languages-in-germany/|archivedate=25 May 2020|url-status=live}}</ref>}}
+| demonym                = [[Germans|German]]
+| government_type        = Federal [[parliamentary republic]]
+| leader_title1          = [[President of Germany|President]]
+| leader_name1           = [[Frank-Walter Steinmeier]]
+| leader_title2          = [[Chancellor of Germany|Chancellor]]
+| leader_name2           = [[Friedrich Merz]]
+| legislature            = {{hlist|[[Bundestag]]| [[German Bundesrat|Bundesrat]]}}
+| area_km2               = 357,022
+| area_rank              = 63rd <!-- Area rank should match [[List of countries and dependencies by area]] -->
+| area_sq_mi             = 137,847 <!--Do not remove per [[WP:MOSNUM]]-->
+| percent_water          = 1.27<ref>{{cite web|title=Surface water and surface water change|accessdate=11 October 2020|publisher=[[Organisation for Economic Co-operation and Development]]|url=https://stats.oecd.org/Index.aspx?DataSetCode=SURFACE_WATER#|archivedate=24 March 2021|archiveurl=https://web.archive.org/web/20210324133453/https://stats.oecd.org/Index.aspx?DataSetCode=SURFACE_WATER|url-status=live}}</ref>
+| population_estimate    = {{IncreaseNeutral}} 83,497,147<ref>{{cite web |url=https://www.destatis.de/EN/Themes/Society-Environment/Population/Current-Population/Tables/liste-current-population-basis-2022.html |title=Population by nationality and sex (quarterly figures) |publisher=[[Federal Statistical Office of Germany|DESTATIS]] |date=25 September 2025}}</ref>
+| population_estimate_year = Q3 2025
+| population_census      = {{IncreaseNeutral}} 82,719,540<ref name="Census2022.DE">{{cite web|url=https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html#toc-2 |title=Ergebnisse des Zensus 2022 – Bevölkerung (15.05.2022) |publisher=[[Federal Statistical Office of Germany|Destatis]] |date=25 June 2024 |language=de |archiveurl=https://web.archive.org/web/20250703074423/https://www.zensus2022.de/DE/Ergebnisse-des-Zensus/_inhalt.html |archivedate=3 July 2025}}</ref>
+| population_census_year = 2022
+| population_census_rank = 19th
+| population_density_km2 = {{#expr: 83491249/357596 round 0}}
+| population_density_sq_mi = <!--Do not remove per [[WP:MOSNUM]]-->
+| population_density_rank = 63rd
+| GDP_PPP                = {{increase}} $6.154&nbsp;trillion<ref name="IMFWEO.DE">{{Cite web |url=https://data.imf.org/en/Data-Explorer?datasetUrn=IMF.RES:WEO(9.0.0) |title=IMF Data. |publisher=[[International Monetary Fund]] |date=October 2025 |access-date=13 November 2025}}</ref>
+| GDP_PPP_rank           = 6th
+| GDP_PPP_year           = 2025
+| GDP_PPP_per_capita     = {{increase}} $73,553<ref name="IMFWEO.DE" />
+| GDP_PPP_per_capita_rank = 23rd
+| GDP_nominal            = {{increase}} $5.014&nbsp;trillion<ref name="IMFWEO.DE" />
+| GDP_nominal_rank       = 3rd
+| GDP_nominal_year       = 2025
+| GDP_nominal_per_capita = {{increase}} $59,925<ref name="IMFWEO.DE" />
+| GDP_nominal_per_capita_rank = 19th
+| Gini                   = 29.4 <!--number only-->
+| Gini_year              = 2023
+| Gini_change            = increase <!--increase/decrease/steady-->
+| Gini_ref               = <ref name="eurogini">{{cite web|url=https://ec.europa.eu/eurostat/databrowser/view/tessi190/default/table?lang=en|title=Gini coefficient of equivalised disposable income|publisher=[[Eurostat]]|accessdate=17 September 2024|archive-date=9 October 2020|archive-url=https://web.archive.org/web/20201009091832/https://ec.europa.eu/eurostat/databrowser/view/tessi190/default/table?lang=en|url-status=live}}</ref>
+| Gini_rank              = 
+| HDI                    = 0.959
+| HDI_rank               = 5th
+| HDI_year               = 2023<!-- Please use the year to which the data refers, not the publication year. -->
+| HDI_change             = increase
+| HDI_ref                = <ref name="UNHDR">{{Cite web |date=6 May 2025 |title=Human Development Report 2025 |url=https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf|url-status=live |archive-url=https://web.archive.org/web/20250506051232/https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |archive-date=6 May 2025 |access-date=6 May 2025 |publisher=[[United Nations Development Programme]]}}</ref>
+| currency               = [[Euro]] ([[Euro sign|€]])
+| currency_code          = EUR
+| time_zone              = [[Central European Time|CET]]
+| utc_offset             = +1
+| utc_offset_DST         = +2
+| time_zone_DST          = [[Central European Summer Time|CEST]]
+| cctld                  = [[.de]]
+| calling_code           = [[Telephone numbers in Germany|+49]]
+| today                  = 
+| date_format            = {{hlist|Day, month, year|Year, month, day}}
+}}

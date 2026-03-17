@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<country>
+    <name>Lebanon</name>
+    <official_name>Lebanese Republic</official_name>
+    <capital>Beirut</capital>
+    <largest_city>Beirut</largest_city>
+    <government>
+        <type>Unitary parliamentary republic</type>
+        <president>Joseph Aoun</president>
+        <prime_minister>Nawaf Salam</prime_minister>
+    </government>
+</country>

@@ -1,0 +1,122 @@
+{{Infobox country
+| conventional_long_name = Swiss Confederation
+| common_name            = Switzerland
+| native_name            = {{collapsible list
+| titlestyle                  = text-align:center;line-height:normal;font-size:86%;
+| title                       = Name in official languages and Latin
+| {{Infobox
+| subbox    = yes
+| bodystyle = font-size:77%;font-weight:normal;
+| rowclass1 = mergedrow
+| label1    = [[German language|German]]:
+| data1     = {{lang|de|Schweizerische Eidgenossenschaft}}
+| rowclass2 = mergedrow
+| label2    = [[French language|French]]:
+| data2     = {{lang|fr|Confédération suisse}}
+| rowclass3 = mergedrow
+| label3    = [[Italian language|Italian]]:
+| data3     = {{lang|it|Confederazione Svizzera}}
+| rowclass4 = mergedrow
+| label4    = [[Romansh language|Romansh]]:
+| data4     = {{lang|rm|Confederaziun svizra}}
+| rowclass5 = mergedrow
+| label5    = [[Latin]]:
+| data5     = {{lang|la|Confoederatio helvetica (CH)}}<ref>[https://hls-dhs-dss.ch/fr/articles/009827/2020-09-15/ Confoederatio helvetica (CH)], in the [[Historical Dictionary of Switzerland]].</ref>
+}}
+}}
+| image_flag             = Flag of Switzerland (Pantone).svg
+| image_coat             = Coat of Arms of Switzerland (Pantone).svg
+| national_motto         = (unofficial)<br />"{{lang|la|[[Unus pro omnibus, omnes pro uno]]}}"
+| national_anthem        = "[[Swiss Psalm]]"<div style="padding-top:0.5em;">{{center|[[File:Swiss Psalm (official instrumental).ogg|Swiss Psalm]]}}</div>
+| image_map              = {{Switcher|[[File:Switzerland (orthographic projection).svg|upright=1.15|frameless]]|Show globe|[[File:Europe-Switzerland.svg|upright=1.15|frameless]]|Show map of Europe|default=1}}
+| map_caption            = {{map caption |location_color=green |region=Europe |region_color=green and dark grey}}
+| capital                = [[Bern]] (''[[de facto]]'')
+| admin_center           = Bern{{efn|name=fedcit|Bern is referred to as "federal city" ({{langx|de|Bundesstadt|links=no}}; {{langx|fr|ville fédérale|links=no}}; {{langx|it|città federale|links=no}}; {{langx|rm|citad federala|links=no}}). Swiss law does not designate a ''capital'' as such, but the federal parliament and government are installed in Bern, while other federal institutions, such as the federal courts, are in other cities ([[Bellinzona]], [[Lausanne]], [[Lucerne]], [[Neuchâtel]], [[St. Gallen]] a.o.).}}<ref name="Bundesstadt" /><ref name="deFacto">{{Cite journal |last=Holenstein |first=André |year=2012 |title=Die Hauptstadt existiert nicht |journal=UniPress – Forschung und Wissenschaft an der Universität Bern |type=scientific article |language=de |location=Bern|publisher=Department Communication, [[University of Bern]]|volume=152 (Sonderfall Hauptstatdtregion) |pages=16–19 |doi=10.7892/boris.41280 |s2cid=178237847 |quote=Als 1848 ein politisch-administratives Zentrum für den neuen Bundesstaat zu bestimmen war, verzichteten die Verfassungsväter darauf, eine Hauptstadt der Schweiz zu bezeichnen und formulierten stattdessen in Artikel 108: "Alles, was sich auf den Sitz der Bundesbehörden bezieht, ist Gegenstand der Bundesgesetzgebung." Die Bundesstadt ist also nicht mehr und nicht weniger als der Sitz der Bundesbehörden. |trans-quote=In 1848, when a political and administrative centre was being determined for the new federation, the founders of the constitution abstained from designating a capital city for Switzerland and instead formulated in Article 108: "Everything, which relates to seat of the authorities, is the subject of the federal legislation." The federal city is therefore no more and no less than the seat of the federal authorities.}}</ref>
+| admin_center_type      = [[Federal city]]
+| largest_city           = [[Zurich]]
+| official_languages     = [[German language|German]] (62%), [[French language|French]] (23%), [[Italian language|Italian]] (8%), [[Romansh language|Romansh]] (0.5%)
+| englishmotto           = "One for all, all for one"
+| languages_type         = Nationality {{nobold|(2024)}}<ref name="BFS_2024_nat">{{Cite web |url=https://dam-api.bfs.admin.ch/hub/api/dam/assets/34447372/master |title=Wohnbevölkerung der Schweiz steigt 2024 auf über neun Millionen, trotz Geburtenrückgang (Medienmitteilung; provisorische Zahlen) |publisher=[[Federal Statistical Office (Switzerland)|Federal Statistical Office (FSO/BFS)]] |date=3 April 2025 |access-date=26 January 2026 |format=PDF |language=de}}</ref>
+| languages              = {{unbulleted list|72.6% [[Swiss nationality law|Swiss]]|27.4% [[Immigration to Switzerland|foreign nationals]]}}
+| religion_year          = 2024
+| religion_ref           = <ref name="SFOReligions">{{Cite web |url=https://www.bfs.admin.ch/bfs/en/home/statistics/population/languages-religions/religions.html |title=Religions |date=<!--No date given, page is continuously updated.--> |website=<!--Website name is the same as publisher name.--> |publisher=[[Federal Statistical Office (Switzerland)|Federal Statistical Office]] |location=Neuchâtel, Switzerland |access-date=2026-02-07 }}</ref>
+| religion               = {{Tree list}}
+* 54.7% [[Christianity]]
+** 30% [[Catholic Church in Switzerland|Catholicism]]
+** 18.7% [[Protestantism in Switzerland|Protestantism]]
+** 6% other [[Christian denomination|Christian]]
+* 36.8% [[Irreligion|no religion]]
+* 6% [[Islam in Switzerland|Islam]]
+* 1.5% [[Religion in Switzerland|other religions]]
+* 0.9% unanswered 
+{{Tree list/end}}
+| demonym                = {{ubl|{{langx|en|[[Swiss people|Swiss]]}}|{{langx|de|link=no|Schweizer/Schweizerin}}|{{langx|fr|link=no|Suisse/Suissesse}}|{{langx|it|svizzero/svizzera}} or {{lang|it|elvetico/elvetica}}|{{langx|rm|Svizzer/Svizra}}}}
+| government_type        = Federal [[List of countries by system of government#Assembly-independent republics|assembly-independent]]<ref>{{Cite journal |last=Shugart |first=Matthew Søberg |date=December 2005 |title=Semi-Presidential Systems: Dual Executive And Mixed Authority Patterns |journal=French Politics |volume=3 |issue=3 |pages=323–351 |doi=10.1057/palgrave.fp.8200087 |s2cid=73642272|doi-access=free |issn=1476-3419}}</ref><ref>{{Cite journal |last=Elgie |first=Robert |date=2016 |title=Government Systems, Party Politics, and Institutional Engineering in the Round |journal=Insight Turkey |volume=18 |issue=4 |pages=79–92 |issn=1302-177X |jstor=26300453}}</ref> directorial republic
+| leader_title1          = [[Federal Council (Switzerland)|Federal Council]]
+| leader_name1           = {{unbulleted list
+ | [[Guy Parmelin]] <small>([[President of the Swiss Confederation|President]])</small>
+ | [[Ignazio Cassis]] <small>([[President_of_the_Swiss_Confederation#Vice-President_of_the_Federal_Council|Vice president]])</small>
+ | [[Karin Keller-Sutter]]
+ | [[Albert Rösti]]
+ | [[Élisabeth Baume-Schneider]]
+ | [[Beat Jans]]
+ | [[Martin Pfister]]
+}}
+| leader_title2          = {{nowrap|[[Chancellor of Switzerland|Federal Chancellor]]}}
+| leader_name2           = [[Viktor Rossi]]
+| legislature            = [[Federal Assembly (Switzerland)|Federal Assembly]]
+| upper_house            = [[Council of States (Switzerland)|Council of States]]
+| lower_house            = [[National Council (Switzerland)|National Council]]
+| sovereignty_type       = [[History of Switzerland|History]]
+| established_event1     = [[Growth of the Old Swiss Confederacy|Founded]]
+| established_date1      = 1 August 1291{{efn|name=rütlischwur|Traditional date. The original date of the [[Rütli Oath]] was 1307 (reported by [[Aegidius Tschudi]] in the 16<sup>th</sup> century) and is just one among several comparable treaties between more or less the same parties during that period. The date of the [[Federal Charter of 1291]] was selected in 1891 for the official celebration of the "Confederacy's 600<sup>th</sup> anniversary".}}
+| established_event2     = Sovereignty recognised ([[Peace of Westphalia]])
+| established_date2      = 24 October 1648
+| established_event3     = [[Federal Treaty]]
+| established_date3      = 7 August 1815
+| established_event4     = [[Switzerland as a federal state|Federal state]]
+| established_date4      = 12 September 1848{{efn|name=federal constitution|A solemn declaration of the {{lang|de|[[Tagsatzung]]}} declared the Federal Constitution adopted on 12 September 1848. A resolution of the {{lang|de|Tagsatzung}} of 14 September 1848 specified that the powers of the institutions provided for by the 1815 Federal Treaty would expire at the time of the constitution of the [[Federal Council (Switzerland)|Federal Council]], which took place on 16 November 1848.}}<ref>{{HDS|9811|Federal constitution|date=3 May 2011 |author=Kley, Andreas}}</ref>
+| area_km2               = 41,291<ref name="Territory_and_environment">{{Cite web | url=https://www.bfs.admin.ch/bfs/en/home/statistics/territory-environment.html | title= Territory and environment | website=www.bfs.admin.ch}}</ref>
+| area_rank              = 132th
+| area_sq_mi             = 15,944.14 <!--Do not remove per [[Wikipedia:Manual of Style/Dates and numbers]]-->
+| percent_water          = 4<ref name="Territory_and_environment" />
+| population_estimate    = {{IncreaseNeutral}} {{formatnum:9060598}}<ref>{{Cite web |title=Switzerland {{!}} Population counter (real-time estimate) |date=1 February 2025 |url=https://www.bfs.admin.ch/bfs/en/home/statistics/population/effectif-change.assetdetail.32175841.html |url-status=live |archive-url=https://web.archive.org/web/20250205175840/https://www.bfs.admin.ch/bfs/en/home/statistics/population/effectif-change.assetdetail.32175841.html |archive-date=5 February 2025 |access-date=5 February 2025}}</ref>
+| population_census      = {{IncreaseNeutral}} 8,327,126<ref>{{Cite report |url=https://www.bfs.admin.ch/bfs/en/home/statistics/population.assetdetail.1401565.html |title=Switzerland's population 2015 |date=22 November 2016 |publisher=Swiss Federal Statistical Office (FSO), Swiss Confederation |issue=1 Population |location=Neuchâtel, Switzerland |access-date=7 December 2016 |archive-url=https://web.archive.org/web/20161220075134/https://www.bfs.admin.ch/bfs/en/home/statistics/population.assetdetail.1401565.html |archive-date=20 December 2016 |format=PDF |url-status=live |editor=Jacqueline Kucera |editor2=Athena Krummenacher |series=Swiss Statistics}}</ref>
+| population_estimate_year = 2025
+| population_estimate_rank = 99th
+| population_census_year = 2015
+| population_density_km2 = 207
+| population_density_rank = 67th
+| GDP_PPP                = {{increase}} $881.083&nbsp;billion<ref name="IMFWEO.CH">{{Cite web |url=https://data.imf.org/en/Data-Explorer?datasetUrn=IMF.RES:WEO(9.0.0) |title=IMF Data. Poland. |publisher=[[International Monetary Fund]] |date=October 2025 |access-date=15 October 2025}}</ref>
+| GDP_PPP_year           = 2025
+| GDP_PPP_rank           = 35th
+| GDP_PPP_per_capita     = {{increase}} $97,660<ref name="IMFWEO.CH" />
+| GDP_PPP_per_capita_rank = 6th
+| GDP_nominal            = {{increase}} $1.003&nbsp;trillion<ref name="IMFWEO.CH" />
+| GDP_nominal_year       = 2025
+| GDP_nominal_rank       = 20th
+| GDP_nominal_per_capita = {{increase}} $111,047<ref name="IMFWEO.CH" />
+| GDP_nominal_per_capita_rank = 3rd
+| Gini                   = 31.5 <!--number only-->
+| Gini_year              = 2023
+| Gini_change            = increase <!--increase/decrease/steady-->
+| Gini_ref               = <ref>{{cite web |url=https://ec.europa.eu/eurostat/databrowser/view/tessi190/default/table?lang=en |title=Gini coefficient of equivalised disposable income – EU-SILC survey |publisher=[[Eurostat]] |website=ec.europa.eu |access-date=31 March 2024 |archive-date=9 October 2020 |archive-url=https://web.archive.org/web/20201009091832/https://ec.europa.eu/eurostat/databrowser/view/tessi190/default/table?lang=en |url-status=live }}</ref>
+| HDI                    = 0.970 <!--number only-->
+| HDI_year               = 2023<!-- Please use the year to which the data refers, not the publication year-->
+| HDI_change             = increase <!--increase/decrease/steady-->
+| HDI_ref                = <ref name="HDI">{{Cite web |date=6 May 2025 |title=Human Development Report 2025 |url=https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf|url-status=live |archive-url=https://web.archive.org/web/20250506051232/https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |archive-date=6 May 2025 |access-date=6 May 2025 |publisher=[[United Nations Development Programme]] |language=en}}</ref>
+| HDI_rank               = 2nd
+| currency               = [[Swiss franc]]
+| currency_code          = CHF
+| time_zone              = [[Central European Time|CET]]
+| utc_offset             = +1
+| utc_offset_DST         = +2
+| time_zone_DST          = [[Central European Summer Time|CEST]]
+| date_format            = dd.mm.yyyy ([[AD]])
+| drives_on              = right
+| calling_code           = [[+41]]
+| patron_saint           = St [[Nicholas of Flüe]]
+| iso3166code            = CH
+| cctld                  = [[.ch]], [[.swiss]]
+| today                  = 
+}}

@@ -1,0 +1,91 @@
+{{Infobox country
+| conventional_long_name = Japan
+| common_name            = Japan
+| native_name            = {{lang|ja|日本}}<!--See romanization below the infobox-->
+| image_flag             = Flag of Japan.svg
+| alt_flag               = Centered deep red circle on a white rectangle
+| image_coat             = Imperial Seal of Japan.svg
+| alt_coat               = Golden circle subdivided by golden wedges with rounded outer edges and thin black outlines
+| symbol_type            = [[Imperial Seal of Japan|Imperial crest]]
+| other_symbol           = 
+| other_symbol_type      = 
+| national_anthem        = {{lang|ja|君が代}} ("{{transliteration|ja|[[Kimigayo]]|i=no}}")<br />{{gloss|His Majesty's Reign}}{{parabr}}{{center|[[File:Kimi ga Yo instrumental.ogg]]}}
+| image_map              = Japan (orthographic projection).svg
+| map_width              = 250px
+| alt_map                = Projection of Asia with Japan's Area colored green
+| map_caption            = {{Legend|#336830|Location of Japan}}
+{{Legend|#61E760|[[Territorial disputes of Japan|Territory claimed but not controlled]]}}
+| capital                = [[Tokyo]]
+| coordinates            = {{Coord|35|41|N|139|46|E|type:city}}
+| largest_city           = capital
+| languages_type         = [[National language]]
+| languages              = [[Japanese language|Japanese]]
+| languages2_type        = Regional languages
+| languages2             = {{plainlist|
+* [[Ainu language|Ainu]]<ref>{{cite news |last1=Lewallen |first1=Ann-Elise |title=Indigenous at last! Ainu Grassroots Organizing and the Indigenous Peoples Summit in Ainu Mosir |url=https://apjjf.org/-ann-elise-lewallen/2971/article.html |work=The Asia Pacific Journal (Japan Focus) |issue=11 |date=November 1, 2008 |archiveurl=https://web.archive.org/web/20231023122729/https://apjjf.org/-ann-elise-lewallen/2971/article.html |archivedate= October 23, 2023}}</ref><ref>{{cite journal
+ |last=Martin |first=Kylie
+ |date=2011
+ |title=Aynu itak: On the Road to Ainu Language Revitalization
+ |journal=Media and Communication Studies
+ |script-journal=ja:メディア·コミュニケーション研究
+ |volume=60
+ |pages=57–93
+ |url=https://eprints.lib.hokudai.ac.jp/dspace/bitstream/2115/47031/1/MSC60_005.pdf
+ |url-status=live
+ |archiveurl=https://web.archive.org/web/20150421225339/https://eprints.lib.hokudai.ac.jp/dspace/bitstream/2115/47031/1/MSC60_005.pdf
+ |archivedate=April 21, 2015
+}}</ref> (recognized)
+* [[Ryukyuan&nbsp;languages]]
+* [[Hachijō language|Hachijō]]
+}}
+| languages2_sub         = yes
+| government_type        = Unitary [[parliamentary constitutional monarchy]]
+| leader_title1          = [[Emperor of Japan|Emperor]]
+| leader_name1           = [[Naruhito]]
+| leader_title2          = [[Prime Minister of Japan|Prime Minister]]
+| leader_name2           = [[Sanae Takaichi]]
+| legislature            = [[National Diet]]
+| upper_house            = [[House of Councillors]]
+| lower_house            = [[House of Representatives (Japan)|House of Representatives]]
+| area_km2               = 377,975
+| area_footnote          = <ref name="area-2019">{{cite web|script-title=ja:令和元年全国都道府県市区町村別面積調 (10月1日時点)|url=https://www.gsi.go.jp/KOKUJYOHO/MENCHO201910-index.html|trans-title=Reiwa 1 nationwide area survey by prefectures and municipalities (as of October 1)
+|publisher=[[Geospatial Information Authority of Japan]]|language=ja|date=December 26, 2019|archiveurl=https://web.archive.org/web/20200415123703/https://www.gsi.go.jp/KOKUJYOHO/MENCHO201910-index.html|archivedate=April 15, 2020|url-status=dead }}</ref>
+| percent_water          = 1.4<ref>{{cite web|title=Surface water and surface water change|accessdate=October 11, 2020|publisher=OECD|url=https://stats.oecd.org/Index.aspx?DataSetCode=SURFACE_WATER|archivedate=March 24, 2021|archiveurl=https://web.archive.org/web/20210324133453/https://stats.oecd.org/Index.aspx?DataSetCode=SURFACE_WATER|url-status=live}}</ref>
+| area_rank              = 62nd<!-- Area rank should match [[List of countries and dependencies by area]] -->
+| population_census      = {{DecreaseNeutral}} 126,146,099<ref>{{cite web|url=https://www.e-stat.go.jp/en/dbview?sid=0003445154|title=2020 Population Census: population by sex, age (single years), month of birth and all nationality or Japanese|accessdate=July 7, 2024|publisher=[[Statistics Bureau of Japan]]|archiveurl=https://web.archive.org/web/20240707224705/https://www.e-stat.go.jp/en/dbview?sid=0003445154|archivedate=July 7, 2024|url-status=live}}</ref>
+| population_census_rank = 
+| population_census_year = 2020
+| population_estimate    = {{DecreaseNeutral}} 122,950,000<ref>{{Cite web |title=Preliminary counts of population of Japan|publisher=[[Statistics Bureau of Japan]] |url=https://www.stat.go.jp/english/index.html |accessdate=January 20, 2026  |archivedate=May 12, 2022 |archiveurl=https://web.archive.org/web/20220512233027/https://www.stat.go.jp/english/index.html |url-status=live}}</ref>
+| population_estimate_year = January 1, 2026
+| population_estimate_rank = 11th
+| population_density_km2 = 330<!-- Per [[WP:CALC]], 125,416,877 / 377,975 = 330.29 -->
+| population_density_rank = 39th
+| GDP_PPP                = {{increase}} $6.758 trillion<ref name="IMFWEO.JP">{{cite web |url=https://www.imf.org/en/Publications/WEO/weo-database/2025/April/weo-report?c=158,&s=NGDPD,PPPGDP,NGDPDPC,PPPPC,&sy=2022&ey=2029&ssm=0&scsm=1&scc=0&ssd=1&ssc=0&sic=0&sort=country&ds=.&br=1 |title=World Economic Outlook Database, April 2025 Edition. (Japan) |publisher=[[International Monetary Fund]]|date=April 22, 2025}}</ref>
+| GDP_PPP_year           = 2025
+| GDP_PPP_rank           = 5th
+| GDP_PPP_per_capita     = {{increase}} $54,815<ref name="IMFWEO.JP" />
+| GDP_PPP_per_capita_rank = 39th
+| GDP_nominal            = {{increase}} $4.230 trillion<ref name="IMFWEO.JP" />
+| GDP_nominal_year       = 2025
+| GDP_nominal_rank       = 4th
+| GDP_nominal_per_capita = {{increase}} $34,713<ref name="IMFWEO.JP" />
+| GDP_nominal_per_capita_rank = 36th
+| Gini                   = 32.3<!-- Number only. -->
+| Gini_year              = 2020
+| Gini_change            = decrease<!-- Increase/decrease/steady. -->
+| Gini_ref               = <ref name="GINI">{{Cite web |title=Gini index – Japan |url=https://data.worldbank.org/indicator/SI.POV.GINI?locations=JP |accessdate=October 15, 2025 |publisher=World Bank|archivedate=April 20, 2025 |archiveurl=https://web.archive.org/web/20250420101646/https://data.worldbank.org/indicator/SI.POV.GINI?locations=JP|url-status=live}}</ref>
+| HDI                    = 0.925<!-- Number only, between 0 and 1. -->
+| HDI_year               = 2023<!-- Please use the year to which the data refers, not the publication year. -->
+| HDI_change             = increase<!-- Increase/decrease/steady. -->
+| HDI_ref                = <ref name="HDI">{{Cite web |date=May 6, 2025 |title=Human Development Report 2025 |url=https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf|url-status=live |archiveurl=https://web.archive.org/web/20250506051232/https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |archivedate=May 6, 2025 |publisher=[[United Nations Development Programme]] |language=en}}</ref>
+| HDI_rank               = 23rd
+| currency               = [[Japanese yen]] ([[¥]])
+| time_zone              = [[Japan Standard Time|JST]]
+| utc_offset             = +09:00
+| drives_on              = left
+| calling_code           = [[+81]]
+| cctld                  = [[.jp]]
+| official_website       = <!----- Do not add www.japan.go.jp – this article is about the country, not the government. ----->
+| demonym                = Japanese
+| today                  = 
+}}
