@@ -3,9 +3,7 @@
 | common_name            = France
 | native_name            = {{lang|fr|République française}}
 | image_flag             = Flag of France.svg
-| image_coat             = <!-- The coat of arms or emblem remains disputed; see [[Talk:France#Coat of arms]] -->
-| other_symbol           = <!-- Seal is inappropriate [[Talk:France]] -->
-| other_symbol_type      = 
+| image_coat             = <!-- Do not place the unofficial symbols of France such as the coat of arms or diplomatic emblem as [[WP:UNDUE|undue weight]], as discussed on [[Talk:France#Coat of arms]] and [[Talk:France#Regarding the national emblem]]. These articles can be found in [[Coat of arms of France]] and [[Diplomatic emblem of France]]. -->
 | national_motto         = "{{Lang|fr|[[Liberté, égalité, fraternité]]|italics=no}}"
 | englishmotto           = {{Raise|0.2em|''Liberty, equality, fraternity''}}
 | national_anthem        = "[[La Marseillaise]]"<br /><div style="display:inline-block;margin-top:0.4em">[[File:La Marseillaise.ogg|alt=sound clip of the Marseillaise French national anthem]]</div>

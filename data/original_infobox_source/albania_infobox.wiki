@@ -1,0 +1,122 @@
+{{Infobox country
+| conventional_long_name = Republic of Albania
+| native_name            = {{Native name|sq|Republika e Shqipërisë}}
+| common_name            = Albania
+| image_flag             = Flag of Albania.svg
+| alt_flag               = Red flag with a black double-headed eagle in the centre
+| image_coat             = [[File:Coat of arms of Albania.svg|60px]]
+| national_motto         = {{native phrase|sq|[[Ti Shqipëri, më jep nder, më jep emrin Shqipëtar|Ti Shqipëri, më jep nder,<br />më jep emrin Shqipëtar]]|paren=no|italic=yes}}<br />"You Albania, you give me honour,<br />you give me the name Albanian"
+| national_anthem        = {{lang|sq|"[[Himni i Flamurit]]"|italic=no}}<br />"Hymn to the Flag"<br /><div style="display:inline-block;margin-top:0.4em;">[[File:Hymni i Flamurit instrumental.ogg]]</div>
+| image_map              = [[File:Location Albania Europe.png|225px|frameless]]
+| map_caption            = Location of Albania (green)<br /> in [[Europe]] (dark grey)
+| capital                = [[Tirana]]
+| largest_city           = [[Tirana]]
+| coordinates            = {{Coord|41|19|N|19|49|E|type:city(557,000)_region:AL-11}}<br/>Country: {{Coord|41|N|20|E|type:country_region:AL|display=title,inline}}
+| official_languages     = [[Albanian language|Albanian]]
+| languages2_type        = Recognised minority languages
+| languages2             = {{Hlist|[[Greek language|Greek]]|[[Aromanian language|Aromanian]]|[[Macedonian language|Macedonian]]}}
+| ethnic_groups          = {{Unbulleted list
+|97.7% [[Albanians]]
+|1.0% [[Greeks in Albania|Greeks]]
+|1.3% [[Minorities of Albania|others]]
+}}
+| ethnic_groups_ref      = <ref>{{Cite web|url=https://www.instat.gov.al/media/13581/cens-i-popullsise-2023.pdf|title=Censi I Popullsisë Dhe Banesave Në Shqipëri 2023|website=www.instat.gov.al|access-date=23 May 2025|archive-date=3 August 2024|archive-url=https://web.archive.org/web/20240803125847/https://www.instat.gov.al/media/13581/cens-i-popullsise-2023.pdf|url-status=live}}</ref>
+| ethnic_groups_year     = 2023{{efn|Excluding population for which data is not available.}}
+| religion               = {{ublist |item_style=white-space:nowrap;
+| {{Tree list}}
+* 50.67% [[Islam in Albania|Islam]]
+** 45.86% [[Sunni]]
+** 4.81%  [[Bektashism in Albania|Bektashism]]
+{{Tree list/end}}
+| {{Tree list}}
+* 16.02% [[Christianity in Albania|Christianity]]
+** 8.39% [[Catholic Church in Albania|Catholicism]]
+** 7.23% [[Albanian Orthodox Church|Orthodoxy]]
+** 0.40% [[Protestantism in Albania|Protestantism]]
+{{Tree list/end}}
+| {{Tree list}}
+* 17.37% [[Irreligion in Albania|Irreligion]]
+** 13.83% [[Believers without religion]]
+** 3.55% [[Atheism]]
+{{Tree list/end}}
+| 15.92% Undeclared}}
+| religion_year          = 2023
+| religion_ref           = {{sfn|2023 Albanian census|2024|p=76}}
+| demonym                = [[Albanians|Albanian]]
+| government_type        = [[Unitary parliamentary republic]]
+| leader_title1          = [[President of Albania|President]]
+| leader_name1           = [[Bajram Begaj]]
+| leader_title2          = [[Prime Minister of Albania|Prime Minister]]
+| leader_name2           = [[Edi Rama]]
+| legislature            = [[Parliament of Albania|Kuvendi]]
+| leader_title3          = [[Speaker of the Parliament of Albania|Parliament Speaker]]
+| leader_name3           = [[Niko Peleshi]]
+| sovereignty_type       = [[History of Albania|Establishment history]]
+| established_event1     = [[Principality of Arbanon]]
+| established_date1      = 1190
+| established_event2     = [[Albanian principalities]]
+| established_date2      = 12th–15th centuries
+| established_event3     = [[Kingdom of Albania (medieval)|Kingdom of Albania]]
+| established_date3      = February 1272
+| established_event4     = [[Principality of Albania (medieval)|Principality of Albania]]
+| established_date4      = 1359
+| established_event5     = [[League of Lezhë]]
+| established_date5      = 2 March 1444
+| established_event6     = [[Pashalik of Scutari]]/[[Pashalik of Janina|Janina]]/[[Pashalik of Berat|Berat]]
+| established_date6      = 1757/1787
+| established_event7     = [[League of Prizren]]
+| established_date7      = 10 June 1878
+| established_event8     = [[Independent Albania]]
+| established_date8      = 28 November 1912
+| established_event9     = [[Principality of Albania]]
+| established_date9      = 29 July 1913
+| established_event10    = [[Albanian Republic (1925–1928)|1st Republic of Albania]]
+| established_date10     = 31 January 1925
+| established_event11    = [[Albanian Kingdom (1928–39)|Kingdom of Albania]]
+| established_date11     = 1 September 1928
+| established_event12    = [[People's Republic of Albania|2nd Republic of Albania]]
+| established_date12     = 10 January 1946
+| established_event13    = [[Constitution of the People's Socialist Republic of Albania|3rd Republic of Albania]]
+| established_date13     = 28 December 1976
+| established_event14    = 4th Republic of Albania
+| established_date14     = 29 April 1991
+| established_event15    = {{nowrap|[[Constitution of Albania|Current constitution]]}}
+| established_date15     = 28 November 1998
+| area_km2               = 28,748
+| area_sq_mi             = 11,100
+| area_rank              = 140th <!-- Area rank should match [[List of countries and dependencies by area]] -->
+| percent_water          = 4.7
+| population_census      = 2,402,113{{sfn|2023 Albanian census|2024|p=105}}
+| population_census_year = 2023
+| population_census_rank = 142nd <!-- Population rank should match [[List of countries and dependencies by population]] -->
+| population_density_km2 = 83.6{{sfn|2023 Albanian census|2024|p=105}}
+| GDP_PPP                = {{increase}} $66.290  billion<ref name="IMFWEO.AL">{{cite web |url=https://www.imf.org/external/datamapper/profile/ALB |title=IMF Data Mapper (Albania) |publisher=[[International Monetary Fund]] |website=IMF.org |date=9 January 2026 |access-date=10 January 2026}}</ref>
+| GDP_PPP_rank           = 118th
+| GDP_PPP_year           = 2026
+| GDP_PPP_per_capita     = {{increase}} $24,840<ref name="IMFWEO.AL" />
+| GDP_PPP_per_capita_rank = 80th
+| GDP_nominal            = {{increase}} $32.410 billion<ref name="IMFWEO.AL" />
+| GDP_nominal_rank       = 125th
+| GDP_nominal_year       = 2026
+| GDP_nominal_per_capita = {{increase}} $12,150<ref name="IMFWEO.AL" />
+| GDP_nominal_per_capita_rank = 79th
+| Gini_year              = 2021
+| Gini                   = 29.4<!-- number only -->
+| Gini_change            = decrease
+| Gini_ref               = <ref>{{cite web|url=https://data.worldbank.org/indicator/SI.POV.GINI?locations=1W-AL&most_recent_value_desc=false|lang=en|title=Gini Coefficient Index-World, Albania|publisher=WorldBank Group, World Bank Open Data|access-date=24 July 2025|archive-date=7 August 2025|archive-url=https://web.archive.org/web/20250807011036/https://data.worldbank.org/indicator/SI.POV.GINI?locations=1W-AL&most_recent_value_desc=false|url-status=live}}</ref>
+| HDI_year               = 2023<!-- Please use the year to which the data refers, not the publication year -->
+| HDI_change             = increase<!-- increase/decrease/steady -->
+| HDI                    = 0.810
+| HDI_ref                = <ref name="UNHDR">{{Cite web |date=6 May 2025 |title=Human Development Report 2025 |url=https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf|url-status=live |archive-url=https://web.archive.org/web/20250506051232/https://hdr.undp.org/system/files/documents/global-report-document/hdr2025reporten.pdf |archive-date=6 May 2025 |access-date=6 May 2025 |publisher=[[United Nations Development Programme]] |language=en}}</ref>
+| HDI_rank               = 71st
+| currency               = [[Albanian lek|Lek]]
+| currency_code          = ALL
+| patron_saint           = [[Our Lady of Good Counsel]]
+| time_zone              = [[Central European Time|CET]]
+| utc_offset             = +1
+| time_zone_DST          = [[Central European Summer Time|CEST]]
+| utc_offset_DST         = +2
+| drives_on              = right
+| calling_code           = [[Telephone numbers in Albania|+355]]
+| cctld                  = [[.al]]
+}}

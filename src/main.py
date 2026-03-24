@@ -1,27 +1,99 @@
+from __future__ import annotations
+
+import json
 import os
 import sys
+
 from parser import parse_xml_file
 from preprocess import preprocess_tree
-from utils import count_nodes, subtree_size, print_edit_script, trees_equal
-from ted import ted_with_ops
+from utils import (
+    count_nodes,
+    trees_equal,
+    first_tree_difference,
+    similarity_score,
+    summarize_edit_ops,
+)
+from ted import ted_with_ops, patch_with_ops
 from diff import save_edit_script, load_edit_script
-from patch import apply_edit_script
-from postprocess import save_tree_as_xml, save_tree_as_json, save_tree_as_wiki_infobox
+from postprocess import (
+    save_tree_as_xml,
+    save_tree_as_json,
+    save_tree_as_wiki_infobox,
+    save_comparison_report,
+)
+
+
+def print_ops(ops: list, method: str) -> None:
+    """
+    Print edit operations for both:
+    - custom EditOp objects
+    - Chawathe/NJ dict operations
+    """
+    method = (method or "custom").lower()
+
+    if method == "custom":
+        visible_ops = [op for op in ops if op.op != "match"]
+
+        if not visible_ops:
+            print("No changes.")
+            return
+
+        for i, op in enumerate(visible_ops, start=1):
+            print(f"{i}. {op.op.upper()} | {op.path}")
+            if op.old_label != op.new_label:
+                print(f"   label: {op.old_label} -> {op.new_label}")
+            if op.old_value != op.new_value:
+                print(f"   value: {op.old_value} -> {op.new_value}")
+        return
+
+    # literature-based TED ops are dicts
+    visible_ops = [op for op in ops if str(op.get("op", "")).lower() != "match"]
+
+    if not visible_ops:
+        print("No changes.")
+        return
+
+    for i, op in enumerate(visible_ops[:50], start=1):
+        kind = str(op.get("op", "")).upper()
+        print(f"{i}. {kind}")
+
+        if "position" in op and op.get("position") is not None:
+            print(f"   position: {op.get('position')}")
+
+        if op.get("source_ref"):
+            print(f"   source_ref: {op.get('source_ref')}")
+        if op.get("parent_ref"):
+            print(f"   parent_ref: {op.get('parent_ref')}")
+
+        if op.get("old_label") != op.get("new_label"):
+            if op.get("old_label") is not None or op.get("new_label") is not None:
+                print(f"   label: {op.get('old_label')} -> {op.get('new_label')}")
+
+        if op.get("old_value") != op.get("new_value"):
+            if op.get("old_value") is not None or op.get("new_value") is not None:
+                print(f"   value: {op.get('old_value')} -> {op.get('new_value')}")
+
+        if op.get("note"):
+            print(f"   note: {op.get('note')}")
+
+    if len(visible_ops) > 50:
+        print(f"... ({len(visible_ops) - 50} more operations not shown)")
 
 
 def main() -> None:
-    print("Program started.")
+    print("XML pipeline started.")
 
-    if len(sys.argv) != 3:
-        print("Usage: python src/main.py <file1.xml> <file2.xml>")
-        print("Received arguments:", sys.argv)
+    if len(sys.argv) not in (3, 4):
+        print("Usage: python src/main.py <file1.xml> <file2.xml> [custom|chawathe|nj]")
         return
 
     file1 = sys.argv[1]
     file2 = sys.argv[2]
+    method = sys.argv[3].lower() if len(sys.argv) == 4 else "custom"
 
     print("File 1:", file1)
     print("File 2:", file2)
+    print("TED method:", method)
 
     if not os.path.exists(file1):
         print(f"Error: file not found -> {file1}")
@@ -34,49 +106,103 @@ def main() -> None:
     tree1 = preprocess_tree(parse_xml_file(file1))
     tree2 = preprocess_tree(parse_xml_file(file2))
 
-    distance, ops = ted_with_ops(tree1, tree2, "/country[1]")
+    n1 = count_nodes(tree1)
+    n2 = count_nodes(tree2)
 
-    max_size = max(subtree_size(tree1), subtree_size(tree2))
-    similarity = 1 - (distance / max_size)
-    similarity = max(0.0, similarity)
+    distance, ops = ted_with_ops(tree1, tree2, "/country[1]", method=method)
+    similarity = similarity_score(distance, n1, n2)
+    summary = summarize_edit_ops(ops)
 
-    print("Tree 1 nodes:", count_nodes(tree1))
-    print("Tree 2 nodes:", count_nodes(tree2))
+    print("\n=== TREE STATS ===")
+    print("Tree 1 nodes:", n1)
+    print("Tree 2 nodes:", n2)
+
+    print("\n=== TED RESULT ===")
     print("Tree Edit Distance:", distance)
     print("Similarity score:", round(similarity, 4))
 
-    print("\nEdit Script:\n")
-    print_edit_script(ops)
+    print("\n=== EDIT SCRIPT SUMMARY ===")
+    print("Inserts:", summary["insert"])
+    print("Deletes:", summary["delete"])
+    print("Updates:", summary["update"])
+    print("Total visible operations:", summary["total_visible"])
 
-    save_edit_script(ops, "data/output/edit_script.json")
-    loaded_ops = load_edit_script("data/output/edit_script.json")
-    patched_tree = apply_edit_script(tree1, loaded_ops)
+    print("\n=== EDIT SCRIPT ===\n")
+    print_ops(ops, method)
 
-    print("\nPatched tree equals Tree 2:", trees_equal(patched_tree, tree2))
+    os.makedirs("data/output", exist_ok=True)
 
-    save_tree_as_xml(tree1, "data/output/tree1_normalized.xml")
-    save_tree_as_xml(tree2, "data/output/tree2_normalized.xml")
-    save_tree_as_xml(patched_tree, "data/output/patched_tree.xml")
+    edit_script_path = "data/output/edit_script.json"
 
-    save_tree_as_json(tree1, "data/output/tree1_normalized.json")
-    save_tree_as_json(tree2, "data/output/tree2_normalized.json")
-    save_tree_as_json(patched_tree, "data/output/patched_tree.json")
+    if method == "custom":
+        save_edit_script(ops, edit_script_path)
+        loaded_ops = load_edit_script(edit_script_path)
+    else:
+        with open(edit_script_path, "w", encoding="utf-8") as f:
+            json.dump(ops, f, indent=4, ensure_ascii=False)
+        with open(edit_script_path, "r", encoding="utf-8") as f:
+            loaded_ops = json.load(f)
 
-    save_tree_as_wiki_infobox(tree1, "data/output/tree1_infobox.txt")
-    save_tree_as_wiki_infobox(tree2, "data/output/tree2_infobox.txt")
-    save_tree_as_wiki_infobox(patched_tree, "data/output/patched_infobox.txt")
+    patched_tree = patch_with_ops(tree1, loaded_ops, method=method)
+    patch_success = trees_equal(patched_tree, tree2)
+    patch_difference = None if patch_success else first_tree_difference(patched_tree, tree2)
 
-    print("Saved normalized Tree 1 XML to data/output/tree1_normalized.xml")
-    print("Saved normalized Tree 2 XML to data/output/tree2_normalized.xml")
-    print("Saved patched tree XML to data/output/patched_tree.xml")
+    print("\n=== PATCH RESULT ===")
+    print("Patched tree equals Tree 2:", patch_success)
+    if patch_difference:
+        print("First difference:", patch_difference)
 
-    print("Saved normalized Tree 1 JSON to data/output/tree1_normalized.json")
-    print("Saved normalized Tree 2 JSON to data/output/tree2_normalized.json")
-    print("Saved patched tree JSON to data/output/patched_tree.json")
+    tree1_xml_path = "data/output/tree1_normalized.xml"
+    tree2_xml_path = "data/output/tree2_normalized.xml"
+    patched_xml_path = "data/output/patched_tree.xml"
 
-    print("Saved Tree 1 infobox text to data/output/tree1_infobox.txt")
-    print("Saved Tree 2 infobox text to data/output/tree2_infobox.txt")
-    print("Saved patched infobox text to data/output/patched_infobox.txt")
+    tree1_json_path = "data/output/tree1_normalized.json"
+    tree2_json_path = "data/output/tree2_normalized.json"
+    patched_json_path = "data/output/patched_tree.json"
+
+    tree1_infobox_path = "data/output/tree1_infobox.txt"
+    tree2_infobox_path = "data/output/tree2_infobox.txt"
+    patched_infobox_path = "data/output/patched_infobox.txt"
+
+    report_path = "data/output/comparison_report.txt"
+
+    save_tree_as_xml(tree1, tree1_xml_path)
+    save_tree_as_xml(tree2, tree2_xml_path)
+    save_tree_as_xml(patched_tree, patched_xml_path)
+
+    save_tree_as_json(tree1, tree1_json_path)
+    save_tree_as_json(tree2, tree2_json_path)
+    save_tree_as_json(patched_tree, patched_json_path)
+
+    save_tree_as_wiki_infobox(tree1, tree1_infobox_path)
+    save_tree_as_wiki_infobox(tree2, tree2_infobox_path)
+    save_tree_as_wiki_infobox(patched_tree, patched_infobox_path)
+
+    save_comparison_report(
+        report_path,
+        file1,
+        file2,
+        n1,
+        n2,
+        distance,
+        similarity,
+        summary,
+        patch_success,
+        patch_difference,
+    )
+
+    print("\n=== OUTPUT FILES ===")
+    print("Saved edit script:", edit_script_path)
+    print("Saved normalized Tree 1 XML:", tree1_xml_path)
+    print("Saved normalized Tree 2 XML:", tree2_xml_path)
+    print("Saved patched tree XML:", patched_xml_path)
+    print("Saved normalized Tree 1 JSON:", tree1_json_path)
+    print("Saved normalized Tree 2 JSON:", tree2_json_path)
+    print("Saved patched tree JSON:", patched_json_path)
+    print("Saved Tree 1 infobox text:", tree1_infobox_path)
+    print("Saved Tree 2 infobox text:", tree2_infobox_path)
+    print("Saved patched infobox text:", patched_infobox_path)
+    print("Saved comparison report:", report_path)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import json
 import os
 import re
-import requests
+import time
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
+import requests
 
 
 WIKIPEDIA_BASE = "https://en.wikipedia.org/wiki/"
@@ -28,10 +31,6 @@ def clean_tag(tag: str) -> str:
 
     return tag
 
-def clean_xml_text(text: str) -> str:
-    text = clean_value(text)
-    text = re.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F]", "", text)
-    return text
 
 def clean_value(text: str) -> str:
     text = re.sub(r"\[[^\]]*\]", "", text)   # remove [1], [a], [c]
@@ -39,7 +38,48 @@ def clean_value(text: str) -> str:
     return text
 
 
-def fetch_country_page(country_name: str) -> str:
+def clean_xml_text(text: str) -> str:
+    text = clean_value(text)
+    text = re.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F]", "", text)
+    return text
+
+
+def normalize_context(section: str | None) -> str | None:
+    if not section:
+        return None
+
+    section = clean_tag(section)
+
+    known_sections = {
+        "area": "area",
+        "population": "population",
+        "gdp_ppp": "gdp_ppp",
+        "gdp_nominal": "gdp_nominal",
+        "government": "government",
+    }
+
+    for key, value in known_sections.items():
+        if key in section:
+            return value
+
+    return None
+
+
+def normalize_country_name_for_wikipedia(country_name: str) -> str:
+    """
+    Normalize some names from the country list into titles that Wikipedia pages expect.
+    """
+    mapping = {
+        "The Bahamas": "Bahamas",
+        "Bolivia": "Bolivia",
+        "Brunei": "Brunei",
+        "Cape Verde": "Cabo Verde",
+    }
+    return mapping.get(country_name, country_name)
+
+
+def fetch_country_page(country_name: str, max_retries: int = 4, timeout: int = 30) -> str:
+    country_name = normalize_country_name_for_wikipedia(country_name)
     url_name = country_name.replace(" ", "_")
     url = WIKIPEDIA_BASE + url_name
 
@@ -52,9 +92,20 @@ def fetch_country_page(country_name: str) -> str:
         "Accept-Language": "en-US,en;q=0.9",
     }
 
-    response = requests.get(url, headers=headers, timeout=20)
-    response.raise_for_status()
-    return response.text
+    last_exc: Exception | None = None
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            response = requests.get(url, headers=headers, timeout=timeout)
+            response.raise_for_status()
+            return response.text
+        except Exception as exc:
+            last_exc = exc
+            if attempt < max_retries:
+                sleep_seconds = 1.5 * attempt
+                time.sleep(sleep_seconds)
+
+    raise last_exc if last_exc is not None else RuntimeError(f"Failed to fetch {url}")
 
 
 def extract_infobox_raw(html: str) -> dict:
@@ -79,6 +130,9 @@ def extract_infobox_raw(html: str) -> dict:
 
 
 def extract_infobox_normalized(html: str) -> dict:
+    """
+    Extract infobox rows and normalize ambiguous labels using section context.
+    """
     soup = BeautifulSoup(html, "html.parser")
 
     table = soup.find("table", class_=lambda c: c and "infobox" in c)
@@ -114,7 +168,7 @@ def extract_infobox_normalized(html: str) -> dict:
 
             if current_section and key in ambiguous_keys:
                 key = f"{current_section}_{key}"
-            
+
             if key == "total" and current_section == "gdp_ppp":
                 key = "gdp_ppp_total"
             elif key == "per_capita" and current_section == "gdp_ppp":
@@ -134,9 +188,7 @@ def extract_infobox_normalized(html: str) -> dict:
 
         elif header and not value:
             section_name = " ".join(header.stripped_strings)
-            section_name = clean_tag(section_name)
-            if section_name:
-                current_section = section_name
+            current_section = normalize_context(section_name)
 
     return data
 
@@ -197,67 +249,3 @@ def collect_country(country_name: str) -> dict:
         "normalized_json": normalized_json_path,
         "normalized_xml": normalized_xml_path,
     }
-
-def normalize_context(section: str | None) -> str | None:
-    if not section:
-        return None
-
-    section = clean_tag(section)
-
-    known_sections = {
-        "area": "area",
-        "population": "population",
-        "gdp_ppp": "gdp_ppp",
-        "gdp_nominal": "gdp_nominal",
-        "government": "government",
-    }
-
-    for key, value in known_sections.items():
-        if key in section:
-            return value
-
-    return None
-
-
-def extract_infobox_normalized(html: str) -> dict:
-    soup = BeautifulSoup(html, "html.parser")
-
-    table = soup.find("table", class_=lambda c: c and "infobox" in c)
-    if table is None:
-        raise ValueError("No infobox found")
-
-    data = {}
-    current_section = None
-
-    ambiguous_keys = {
-        "total",
-        "per_capita",
-        "water",
-        "density",
-        "estimate",
-    }
-
-    for row in table.find_all("tr"):
-        header = row.find("th")
-        value = row.find("td")
-
-        if header and value:
-            raw_key = " ".join(header.stripped_strings)
-            raw_value = " ".join(value.stripped_strings)
-
-            key = clean_tag(raw_key)
-            val = clean_value(raw_value)
-
-            if not key or not val:
-                continue
-
-            if current_section and key in ambiguous_keys:
-                key = f"{current_section}_{key}"
-
-            data[key] = val
-
-        elif header and not value:
-            section_name = " ".join(header.stripped_strings)
-            current_section = normalize_context(section_name)
-
-    return data

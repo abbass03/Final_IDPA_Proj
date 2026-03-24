@@ -102,3 +102,41 @@ def save_tree_as_wiki_infobox(root: Node, file_path: str, template_name: str = "
     text = tree_to_wiki_infobox_text(root, template_name=template_name)
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(text)
+
+def save_comparison_report(
+    file_path: str,
+    file1: str,
+    file2: str,
+    n1: int,
+    n2: int,
+    distance: int,
+    similarity: float,
+    summary: dict,
+    patch_success: bool,
+    patch_difference: str | None,
+) -> None:
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write("=== COUNTRY COMPARISON REPORT ===\n\n")
+
+        f.write(f"File 1: {file1}\n")
+        f.write(f"File 2: {file2}\n\n")
+
+        f.write("=== TREE STATS ===\n")
+        f.write(f"Tree 1 nodes: {n1}\n")
+        f.write(f"Tree 2 nodes: {n2}\n\n")
+
+        f.write("=== TED RESULT ===\n")
+        f.write(f"Tree Edit Distance: {distance}\n")
+        f.write(f"Similarity score: {round(similarity, 4)}\n\n")
+
+        f.write("=== EDIT SUMMARY ===\n")
+        f.write(f"Inserts: {summary['insert']}\n")
+        f.write(f"Deletes: {summary['delete']}\n")
+        f.write(f"Updates: {summary['update']}\n")
+        f.write(f"Total visible operations: {summary['total_visible']}\n\n")
+
+        f.write("=== PATCH RESULT ===\n")
+        f.write(f"Patch success: {patch_success}\n")
+
+        if patch_difference:
+            f.write(f"First difference: {patch_difference}\n")

@@ -1,388 +1,297 @@
-# Tree Edit Distance for Country Infobox Comparison
+# 🌍 Wikipedia Infobox Comparison using Tree Edit Distance (TED)
 
-This project compares country information using **Tree Edit Distance (TED)** with two different representations:
+## 📌 Overview
 
-1. **XML-based country data**
-2. **Wikipedia infobox wikitext**
+This project implements a complete system for **comparing, differencing, and transforming Wikipedia infoboxes** using **Tree Edit Distance (TED)**.
 
-The system parses each representation into trees, computes structural differences, generates edit scripts, and applies patch operations to transform one country tree into another.
+It converts infobox data into **rooted ordered labeled trees**, computes similarity between countries, extracts edit scripts, and reconstructs trees using patching.
 
----
+The system supports:
 
-## Table of Contents
-
-- [Project Idea](#project-idea)
-- [Objectives](#objectives)
-- [Approaches](#approaches)
-- [Project Structure](#project-structure)
-- [How the Pipeline Works](#how-the-pipeline-works)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [How to Run](#how-to-run)
-- [Testing](#testing)
-- [Evaluation](#evaluation)
-- [Outputs](#outputs)
-- [Current Results](#current-results)
-- [Limitations](#limitations)
-- [Future Work](#future-work)
-- [Author](#author)
-- [License](#license)
+* Structured **XML comparison**
+* Real-world **Wikipedia infobox comparison**
+* Multiple **TED algorithms**
 
 ---
 
-## Project Idea
+## 🚀 Features
 
-Country information often appears in semi-structured formats such as XML files and Wikipedia infoboxes. These formats contain similar information, but they differ in structure, ordering, labels, and formatting.
+* 🔄 **Preprocessing**: Convert infobox data into tree structures
+* 🌳 **Tree Representation**: Rooted ordered labeled trees
+* 📏 **Tree Edit Distance (TED)**:
 
-This project studies how to compare such data using **Tree Edit Distance** by:
+  * Custom TED
+  * Chawathe algorithm
+  * Nierman–Jagadish (NJ)
+* 🔧 **Edit Script Extraction** (Insert, Delete, Update)
+* 🧩 **Tree Patching** (reconstruct target tree)
+* 📊 **Similarity Measurement**
+* 📄 **Postprocessing Outputs**:
 
-- converting country data into trees
-- measuring structural and value differences
-- generating edit scripts
-- applying patches to reconstruct target trees
-- comparing the reliability of XML and wiki-infobox representations
-
----
-
-## Objectives
-
-The main goals of this project are:
-
-- parse country data into tree structures
-- compute tree edit distance between two countries
-- generate edit operations:
-  - `insert`
-  - `delete`
-  - `update`
-- apply the generated edit script to transform one tree into another
-- evaluate the method on multiple country pairs
-- compare the XML approach with the wiki-infobox approach
+  * XML
+  * JSON
+  * Wikipedia infobox text
+  * Comparison report
+* 🌲 **Tree Visualization**
 
 ---
 
-## Approaches
+## 🏗️ Project Structure
 
-### 1. XML Approach
+```bash
+src/
+├── parser.py
+├── preprocess.py
+├── wiki_parser.py
+├── wiki_source.py
+├── ted.py
+├── ted_custom.py
+├── ted_adapter.py
+├── diff.py
+├── patch.py
+├── utils.py
+├── postprocess.py
+├── main.py
+├── wiki_main.py
+├── visualize_trees.py
 
-The XML approach works on structured country XML files.
-
-**Pipeline**
-- parse raw XML
-- preprocess/normalize the tree
-- compute TED
-- generate edit script
-- apply patch
-- evaluate reconstruction quality
-
-**Strengths**
-- cleaner structure
-- more stable patching
-- easier parsing
-- stronger reconstruction performance
-
-**Limitations**
-- less close to original Wikipedia source formatting
-
----
-
-### 2. Wiki Infobox Approach
-
-The wiki approach works directly on infobox wikitext extracted from Wikipedia.
-
-**Pipeline**
-- fetch page wikitext
-- extract infobox block
-- parse infobox into a tree
-- compute TED
-- generate edit script
-- apply patch
-- serialize back into infobox-like wikitext
-
-**Supported wiki value types**
-- plain text
-- internal links such as `[[Beirut]]`
-- templates such as `{{flag|Lebanon}}`
-- `<br>`-separated values
-
-**Strengths**
-- closer to the original semi-structured source
-- more realistic representation of Wikipedia data
-
-**Limitations**
-- parsing is harder
-- patch reconstruction is less stable on large real infoboxes
-- repeated labels and nested markup make paths fragile
+data/
+├── normalized_xml/
+├── original_infobox_source/
+├── output/
+```
 
 ---
 
-## Project Structure
+## ⚙️ Installation
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+```
+
+### 2. Create virtual environment
+
+```bash
+python -m venv .venv
+```
+
+### 3. Activate environment
+
+**Windows:**
+
+```bash
+.venv\Scripts\activate
+```
+
+**Mac/Linux:**
+
+```bash
+source .venv/bin/activate
+```
+
+### 4. Install dependencies
+
+```bash
+pip install requests beautifulsoup4
+```
+
+---
+
+## ▶️ How to Run
+
+---
+
+### 🟢 XML Pipeline
+
+Compare two XML files:
+
+```bash
+python src/main.py data/normalized_xml/lebanon.xml data/normalized_xml/switzerland.xml custom
+```
+
+Available methods:
+
+* `custom`
+* `chawathe`
+* `nj`
+
+---
+
+### 🔵 Wiki Pipeline
+
+Compare two Wikipedia infobox files:
+
+```bash
+python src/wiki_main.py data/original_infobox_source/lebanon_infobox.wiki data/original_infobox_source/switzerland_infobox.wiki nj
+```
+
+---
+
+### 🌍 Generate Wikipedia Infobox Files
+
+```python
+from wiki_source import fetch_page_wikitext, extract_infobox_block, save_infobox_block
+
+page = fetch_page_wikitext("Albania")
+infobox = extract_infobox_block(page)
+save_infobox_block("Albania", infobox)
+```
+
+---
+
+### 🌲 Visualize Trees
+
+```bash
+python src/visualize_trees.py xml data/normalized_xml/lebanon.xml data/normalized_xml/switzerland.xml chawathe
+```
+
+or
+
+```bash
+python src/visualize_trees.py wiki data/original_infobox_source/lebanon_infobox.wiki data/original_infobox_source/switzerland_infobox.wiki nj
+```
+
+---
+
+## 🧠 Methodology
+
+### 1. Preprocessing
+
+* Parse XML or Wikipedia infobox
+* Convert into tree structure
+
+### 2. Tree Representation
+
+Each node contains:
+
+* label
+* value
+* children
+
+### 3. Tree Edit Distance (TED)
+
+Compute transformation cost between two trees.
+
+Implemented algorithms:
+
+* Custom recursive TED
+* Chawathe
+* Nierman–Jagadish
+
+### 4. Edit Script
+
+Operations:
+
+* Insert
+* Delete
+* Update
+
+### 5. Tree Patching
+
+Apply operations to reconstruct target tree.
+
+### 6. Postprocessing
+
+Export results into:
+
+* XML
+* JSON
+* Infobox text
+* Reports
+
+---
+
+## 📊 Example Output
 
 ```text
-Project1/
-├── data/
-│   ├── normalized_json/
-│   ├── normalized_xml/
-│   ├── original_infobox_source/
-│   ├── output/
-│   ├── raw/
-│   ├── raw_json/
-│   ├── raw_wikitext/
-│   ├── raw_xml/
-│   └── countries.txt
-│
-├── src/
-│   ├── build_dataset.py
-│   ├── collector.py
-│   ├── diff.py
-│   ├── evaluate_wiki_pipeline.py
-│   ├── evaluate_xml_pipeline.py
-│   ├── main.py
-│   ├── models.py
-│   ├── parser.py
-│   ├── patch.py
-│   ├── postprocess.py
-│   ├── preprocess.py
-│   ├── run_examples.py
-│   ├── ted.py
-│   ├── test_collect.py
-│   ├── test_wiki_pipeline.py
-│   ├── test_wiki_source.py
-│   ├── utils.py
-│   ├── wiki_main.py
-│   ├── wiki_parser.py
-│   ├── wiki_serializer.py
-│   └── wiki_source.py
-│
-└── README.md
+Tree Edit Distance: 69
+Similarity score: 0.5793
 
+Inserts: 3
+Deletes: 0
+Updates: 63
 
-How the Pipeline Works
-General TED workflow
+Patch success: True
+```
 
--For both approaches, the core workflow is:
--load source country data
--load target country data
--parse each into a tree
--compute tree edit distance
--generate an edit script
--apply the edit script to the source tree
--compare the patched tree with the target tree
+---
 
-XML workflow
+## 📈 Results Summary
 
--read XML file
--parse XML into internal Node tree
--preprocess/normalize the tree
--compute TED and edit operations
--patch source tree
--compare patched tree to target tree
+| Method   | XML Performance | Wiki Performance |
+| -------- | --------------- | ---------------- |
+| Custom   | ✅ Consistent    | ⚠️ Less robust   |
+| Chawathe | ✅ Strong        | ✅ Strong         |
+| NJ       | ✅ Strong        | ⭐ Best           |
 
+---
 
-Wiki workflow
+## 🎯 Design Choices
 
--fetch or load infobox wikitext
--extract infobox template
--parse infobox into internal Node tree
--compute TED and edit operations
--patch source tree
--serialize patched tree if needed
--compare patched tree to target tree
+### Text Representation
 
+* Used **single text node per value**
+* Simpler and faster
 
-Requirements
+### Dual Pipeline
 
--Python 3.10 or newer
--Windows PowerShell or any terminal
--Internet access only if you want to fetch Wikipedia infoboxes live
--This project mainly uses Python standard libraries. If you created a virtual environment, activate it before running.
+* XML → controlled environment
+* Wiki → real-world data
 
+### Multiple TED Algorithms
 
-Installation
-1. Clone or open the project
+* Enables comparison
+* Improves robustness
 
-If you already have the project locally, go into the folder.
-cd Project1
+---
 
-2. Create a virtual environment
-python -m venv .venv
+## 🧪 Validation
 
-3. Activate the virtual environment
-Windows PowerShell
-.\.venv\Scripts\Activate.ps1
-Windows CMD
-.\.venv\Scripts\activate.bat
+* XML pipeline: all methods produce consistent results
+* Wiki pipeline: NJ and Chawathe perform best
+* Patch success validates correctness
 
+---
 
+## 🔮 Future Work
 
+* Tokenized node representation
+* Semantic tree abstraction
+* Improved visualization
+* Performance optimization
 
-How to Run
+---
 
-Run the XML pipeline
-python .\src\main.py
+## 📚 References
 
-This runs the XML-based tree comparison pipeline.
+* Chawathe, S. S. – Tree comparison algorithms
+* Nierman, A., Jagadish, H. V. – XML similarity
+* IDPA Course Material
 
-Run the Wiki pipeline
+---
 
-python .\src\test_wiki_source.py
-python src/wiki_main.py data/original_infobox_source/lebanon_infobox.wiki data/original_infobox_source/switzerland_infobox.wiki
+## 👨‍💻 Authors
 
-This runs the wiki-infobox tree comparison pipeline.
+* Abbas Abdallah-Hasan Bazzi
 
-Generate wiki infobox files
+---
 
-To fetch infoboxes from Wikipedia and save them into:
+## 📌 Notes
 
-data/original_infobox_source/
+* Best method for demo:
 
-run:
+  * XML → `custom`
+  * Wiki → `nj`
 
-python .\src\test_wiki_source.py
+* Ensure internet connection when fetching Wikipedia data
 
-You can edit the country list inside test_wiki_source.py to generate more countries.
+---
 
-Example expected files:
+## ⭐ Conclusion
 
-lebanon_infobox.wiki
+This project successfully implements a full pipeline for comparing and transforming Wikipedia infoboxes using tree-based techniques. It demonstrates the effectiveness of TED algorithms, especially literature-based approaches, in handling semi-structured data.
 
-switzerland_infobox.wiki
-
-france_infobox.wiki
-
-germany_infobox.wiki
-
-japan_infobox.wiki
-
-
-
-
-Testing
-Test collection logic
-python .\src\test_collect.py
-Test the wiki pipeline
-python .\src\test_wiki_pipeline.py
-
-These tests check:
-
-parse → serialize → parse round-trip stability
-
-zero TED for identical trees
-
-patch reconstruction on small examples
-
-preservation of links
-
-preservation of templates
-
-Expected output:
-
-All wiki pipeline tests passed.
-Evaluation
-Evaluate XML approach
-python .\src\evaluate_xml_pipeline.py
-
-This reports for each pair:
-
-source country
-
-target country
-
-source node count
-
-target node count
-
-TED
-
-similarity score
-
-patch success
-
-Example output:
-
-source       target       nodes_source  nodes_target  ted      similarity   patch_success
-------------------------------------------------------------------------------------------
-Lebanon      Switzerland  77            83            68       0.575        True
-France       Germany      65            51            43       0.6293       True
-Germany      Japan        51            53            37       0.6442       True
-
-
-Evaluate Wiki approach
-python .\src\evaluate_wiki_pipeline.py
-
-This evaluates the wiki-infobox pipeline on the available infobox files.
-
-Because the wiki representation is more complex, TED computation works well, but exact patch reconstruction may fail on large real-world examples.
-
-
-Outputs
-
-Depending on the script you run, the project can generate outputs such as:
-
-parsed or normalized trees
-
-edit scripts in JSON
-
-patched XML or wiki trees
-
-serialized wiki infobox text
-
-evaluation summaries
-
-
-
-The project uses a normalized similarity score:
-
-similarity = 1 - TED / (nodes_source + nodes_target)
-
-Interpretation:
-
-closer to 1.0 means more similar
-
-lower values mean more structural and textual difference
-
-Current Results
-XML approach
-
-The XML approach is currently the more stable and reliable one.
-
-Observed behavior:
-
-exact patch reconstruction succeeded on most tested country pairs
-
-tree edit distance values were consistent and meaningful
-
-XML trees were easier to parse and patch than wiki trees
-
-Example result summary:
-
-successful exact reconstruction in most tested cases
-
-one direction-dependent failure suggests patch sensitivity in some asymmetric cases
-
-
-
-Wiki approach
-
-The wiki approach successfully:
-
-parses real infoboxes
-
-computes TED
-
-generates edit scripts
-
-handles links and templates better than the initial version
-
-However, exact patch reconstruction on large real-world infoboxes is still unstable.
-
-
-
-This is mainly due to:
-
-repeated labels
-
-nested wiki structure
-
-fragile label-based path targeting during patching
-
-
+---
