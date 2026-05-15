@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infobox TED Studio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <aside class="control-panel">
+            <div class="brand-block">
+                <p class="eyebrow">Wikipedia Infobox Intelligence</p>
+                <h1>TED Studio</h1>
+                <p class="lede">Compare countries through structure, semantics, edit scripts, and patching in one interactive workspace.</p>
+            </div>
+
+            <div class="control-card">
+                <label for="modeSelect">Mode</label>
+                <select id="modeSelect"></select>
+
+                <label for="methodSelect">TED Method</label>
+                <select id="methodSelect"></select>
+
+                <label for="file1Select">Source Document</label>
+                <select id="file1Select"></select>
+
+                <label for="file2Select">Target Document</label>
+                <select id="file2Select"></select>
+
+                <div class="button-row">
+                    <button id="swapButton" class="ghost-button" type="button">Swap</button>
+                    <button id="compareButton" class="primary-button" type="button">Run Comparison</button>
+                </div>
+            </div>
+
+            <div class="control-card compact">
+                <h2>What This UI Shows</h2>
+                <ul class="feature-list">
+                    <li>Semantic tree distance with typed value awareness</li>
+                    <li>Live edit script review and patch validation</li>
+                    <li>Tree inspection for source, target, and patched outputs</li>
+                    <li>Readable XML, JSON, infobox, and report artifacts</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <section class="hero-panel">
+                <div>
+                    <p class="eyebrow">Project Command Center</p>
+                    <h2>Make the comparison feel explainable, not mechanical.</h2>
+                </div>
+                <div id="statusPill" class="status-pill idle">Ready</div>
+            </section>
+
+            <section class="metrics-grid">
+                <article class="metric-card">
+                    <p class="metric-label">Distance</p>
+                    <p id="distanceValue" class="metric-value">-</p>
+                </article>
+                <article class="metric-card">
+                    <p class="metric-label">Similarity</p>
+                    <p id="similarityValue" class="metric-value">-</p>
+                </article>
+                <article class="metric-card">
+                    <p class="metric-label">Patch Status</p>
+                    <p id="patchValue" class="metric-value">-</p>
+                </article>
+                <article class="metric-card">
+                    <p class="metric-label">Visible Operations</p>
+                    <p id="opsValue" class="metric-value">-</p>
+                </article>
+            </section>
+
+            <section class="summary-strip">
+                <div class="summary-card">
+                    <span>Tree 1 Nodes</span>
+                    <strong id="tree1Nodes">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Tree 2 Nodes</span>
+                    <strong id="tree2Nodes">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Inserts</span>
+                    <strong id="insertCount">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Deletes</span>
+                    <strong id="deleteCount">-</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Updates</span>
+                    <strong id="updateCount">-</strong>
+                </div>
+            </section>
+
+            <section class="tab-section">
+                <div class="tab-bar">
+                    <button class="tab-button active" data-tab="overview">Overview</button>
+                    <button class="tab-button" data-tab="operations">Operations</button>
+                    <button class="tab-button" data-tab="trees">Trees</button>
+                    <button class="tab-button" data-tab="artifacts">Artifacts</button>
+                </div>
+
+                <div id="overviewTab" class="tab-panel active">
+                    <div class="two-column">
+                        <article class="content-card">
+                            <h3>Run Summary</h3>
+                            <pre id="reportView" class="code-block empty-state">Run a comparison to see the generated report.</pre>
+                        </article>
+                        <article class="content-card">
+                            <h3>Selected Documents</h3>
+                            <div class="preview-stack">
+                                <div>
+                                    <p class="small-label">Source</p>
+                                    <pre id="sourcePreview" class="code-block empty-state">No file selected.</pre>
+                                </div>
+                                <div>
+                                    <p class="small-label">Target</p>
+                                    <pre id="targetPreview" class="code-block empty-state">No file selected.</pre>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="operationsTab" class="tab-panel">
+                    <article class="content-card">
+                        <div class="section-header">
+                            <h3>Edit Script</h3>
+                            <p id="opsSubtitle">No operations loaded.</p>
+                        </div>
+                        <div id="operationsList" class="operations-list empty-state">Run a comparison to inspect operations.</div>
+                    </article>
+                </div>
+
+                <div id="treesTab" class="tab-panel">
+                    <div class="three-column">
+                        <article class="content-card">
+                            <h3>Source Tree</h3>
+                            <div id="tree1View" class="tree-view empty-state">No tree loaded.</div>
+                        </article>
+                        <article class="content-card">
+                            <h3>Target Tree</h3>
+                            <div id="tree2View" class="tree-view empty-state">No tree loaded.</div>
+                        </article>
+                        <article class="content-card">
+                            <h3>Patched Tree</h3>
+                            <div id="patchedTreeView" class="tree-view empty-state">No tree loaded.</div>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="artifactsTab" class="tab-panel">
+                    <article class="content-card">
+                        <div class="artifact-switcher">
+                            <button class="artifact-button active" data-artifact="tree1_json">Tree 1 JSON</button>
+                            <button class="artifact-button" data-artifact="tree2_json">Tree 2 JSON</button>
+                            <button class="artifact-button" data-artifact="patched_json">Patched JSON</button>
+                            <button class="artifact-button" data-artifact="tree1_xml">Tree 1 XML</button>
+                            <button class="artifact-button" data-artifact="tree2_xml">Tree 2 XML</button>
+                            <button class="artifact-button" data-artifact="patched_xml">Patched XML</button>
+                            <button class="artifact-button" data-artifact="tree1_infobox">Tree 1 Infobox</button>
+                            <button class="artifact-button" data-artifact="tree2_infobox">Tree 2 Infobox</button>
+                            <button class="artifact-button" data-artifact="patched_infobox">Patched Infobox</button>
+                        </div>
+                        <pre id="artifactView" class="code-block empty-state">Run a comparison to inspect generated artifacts.</pre>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

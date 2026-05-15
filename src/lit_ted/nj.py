@@ -8,6 +8,7 @@ from .common import clone_tree, similarity_from_distance
 from .tree_validation import validate_tree
 from .edit_script import NJEditOperation, NJTedResult
 from .tree import TreeNode
+from semantic_values import semantic_value_distance
 
 
 @dataclass(frozen=True)
@@ -43,11 +44,13 @@ def nj_tree_size(root: TreeNode) -> int:
 
 
 def _node_equal(a: TreeNode, b: TreeNode) -> bool:
-    return a.label == b.label and (a.value or None) == (b.value or None)
+    return a.label == b.label and semantic_value_distance(a.value, b.value) == 0
 
 
 def _update_cost(a: TreeNode, b: TreeNode) -> int:
-    return 0 if _node_equal(a, b) else 1
+    label_cost = 0 if a.label == b.label else 1
+    value_cost = semantic_value_distance(a.value, b.value)
+    return label_cost + value_cost
 
 
 def _iter_nodes(root: TreeNode):

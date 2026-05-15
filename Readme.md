@@ -16,7 +16,7 @@ The system supports:
 
 ## 🚀 Features
 
-* 🔄 **Preprocessing**: Convert infobox data into tree structures
+* 🔄 **Typed Preprocessing**: Convert infobox data into tree structures with value-aware normalization
 * 🌳 **Tree Representation**: Rooted ordered labeled trees
 * 📏 **Tree Edit Distance (TED)**:
 
@@ -126,6 +126,28 @@ Compare two Wikipedia infobox files:
 
 ```bash
 python src/wiki_main.py data/original_infobox_source/lebanon_infobox.wiki data/original_infobox_source/switzerland_infobox.wiki nj
+
+### 🖥️ Interactive UI
+
+Launch the local web interface:
+
+```bash
+python src/ui_server.py
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8765
+```
+
+The UI lets you:
+
+* choose XML or wiki comparison mode
+* select the TED method
+* inspect source and target documents
+* run comparisons interactively
+* explore edit scripts, trees, reports, XML, JSON, and infobox outputs
 ```
 
 ---
@@ -162,6 +184,7 @@ python src/visualize_trees.py wiki data/original_infobox_source/lebanon_infobox.
 
 * Parse XML or Wikipedia infobox
 * Convert into tree structure
+* Normalize and dissect important values such as dates, measurements, and multi-token text
 
 ### 2. Tree Representation
 
@@ -234,7 +257,8 @@ Patch success: True
 ### Text Representation
 
 * Used **single text node per value**
-* Simpler and faster
+* Preserved the original text node while adding structured children for dates, numbers, units, and informative tokens
+* Improves realism of TED comparisons without breaking XML/wiki reconstruction
 
 ### Dual Pipeline
 

@@ -25,12 +25,16 @@ def node_to_xml_element(node: Node) -> ET.Element:
 
 
 def save_tree_as_xml(root: Node, file_path: str) -> None:
-    xml_root = node_to_xml_element(root)
-    rough_string = ET.tostring(xml_root, encoding="utf-8")
-    pretty_xml = minidom.parseString(rough_string).toprettyxml(indent="    ")
+    pretty_xml = tree_to_pretty_xml(root)
 
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(pretty_xml)
+
+
+def tree_to_pretty_xml(root: Node) -> str:
+    xml_root = node_to_xml_element(root)
+    rough_string = ET.tostring(xml_root, encoding="utf-8")
+    return minidom.parseString(rough_string).toprettyxml(indent="    ")
 
 
 def tree_to_dict(node: Node):
@@ -68,15 +72,30 @@ def save_tree_as_json(root: Node, file_path: str) -> None:
 
 def extract_text_value(node: Node) -> str:
     text_parts = []
+    nested_parts = []
+    element_children = [child for child in node.children if child.node_type == "element"]
+    multiple_element_children = len(element_children) > 1
 
     for child in node.children:
         if child.node_type == "text" and child.value is not None:
-            text_parts.append(child.value)
+            value = child.value.strip()
+            if value:
+                text_parts.append(value)
         elif child.node_type == "element":
             nested = extract_text_value(child)
-            if nested:
-                text_parts.append(nested)
+            if not nested:
+                continue
 
+            has_element_children = any(grand.node_type == "element" for grand in child.children)
+            if has_element_children or multiple_element_children:
+                nested_parts.append(f"{child.label}: {nested}")
+            else:
+                nested_parts.append(nested)
+
+    if nested_parts and text_parts:
+        return "; ".join(text_parts + nested_parts).strip()
+    if nested_parts:
+        return "; ".join(nested_parts).strip()
     return " ".join(part.strip() for part in text_parts if part and part.strip()).strip()
 
 
@@ -103,6 +122,47 @@ def save_tree_as_wiki_infobox(root: Node, file_path: str, template_name: str = "
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(text)
 
+def build_comparison_report(
+    file1: str,
+    file2: str,
+    n1: int,
+    n2: int,
+    distance: int,
+    similarity: float,
+    summary: dict,
+    patch_success: bool,
+    patch_difference: str | None,
+) -> str:
+    lines = [
+        "=== COUNTRY COMPARISON REPORT ===",
+        "",
+        f"File 1: {file1}",
+        f"File 2: {file2}",
+        "",
+        "=== TREE STATS ===",
+        f"Tree 1 nodes: {n1}",
+        f"Tree 2 nodes: {n2}",
+        "",
+        "=== TED RESULT ===",
+        f"Tree Edit Distance: {distance}",
+        f"Similarity score: {round(similarity, 4)}",
+        "",
+        "=== EDIT SUMMARY ===",
+        f"Inserts: {summary['insert']}",
+        f"Deletes: {summary['delete']}",
+        f"Updates: {summary['update']}",
+        f"Total visible operations: {summary['total_visible']}",
+        "",
+        "=== PATCH RESULT ===",
+        f"Patch success: {patch_success}",
+    ]
+
+    if patch_difference:
+        lines.append(f"First difference: {patch_difference}")
+
+    return "\n".join(lines) + "\n"
+
+
 def save_comparison_report(
     file_path: str,
     file1: str,
@@ -115,28 +175,16 @@ def save_comparison_report(
     patch_success: bool,
     patch_difference: str | None,
 ) -> None:
+    report = build_comparison_report(
+        file1,
+        file2,
+        n1,
+        n2,
+        distance,
+        similarity,
+        summary,
+        patch_success,
+        patch_difference,
+    )
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write("=== COUNTRY COMPARISON REPORT ===\n\n")
-
-        f.write(f"File 1: {file1}\n")
-        f.write(f"File 2: {file2}\n\n")
-
-        f.write("=== TREE STATS ===\n")
-        f.write(f"Tree 1 nodes: {n1}\n")
-        f.write(f"Tree 2 nodes: {n2}\n\n")
-
-        f.write("=== TED RESULT ===\n")
-        f.write(f"Tree Edit Distance: {distance}\n")
-        f.write(f"Similarity score: {round(similarity, 4)}\n\n")
-
-        f.write("=== EDIT SUMMARY ===\n")
-        f.write(f"Inserts: {summary['insert']}\n")
-        f.write(f"Deletes: {summary['delete']}\n")
-        f.write(f"Updates: {summary['update']}\n")
-        f.write(f"Total visible operations: {summary['total_visible']}\n\n")
-
-        f.write("=== PATCH RESULT ===\n")
-        f.write(f"Patch success: {patch_success}\n")
-
-        if patch_difference:
-            f.write(f"First difference: {patch_difference}\n")
+        f.write(report)

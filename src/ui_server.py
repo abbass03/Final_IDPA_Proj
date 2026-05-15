@@ -1,0 +1,197 @@
+from __future__ import annotations
+
+import json
+import os
+from http import HTTPStatus
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+from comparison_service import compare_documents
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+UI_DIR = PROJECT_ROOT / "ui"
+DATA_DIR = PROJECT_ROOT / "data"
+HOST = "127.0.0.1"
+PORT = 8765
+
+
+def json_response(handler: BaseHTTPRequestHandler, payload: dict, status: int = HTTPStatus.OK) -> None:
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    handler.send_response(status)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+def text_response(handler: BaseHTTPRequestHandler, text: str, content_type: str = "text/plain; charset=utf-8") -> None:
+    body = text.encode("utf-8")
+    handler.send_response(HTTPStatus.OK)
+    handler.send_header("Content-Type", content_type)
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+def list_relative_files(folder: Path, suffix: str) -> list[str]:
+    if not folder.exists():
+        return []
+    files = [path.relative_to(PROJECT_ROOT).as_posix() for path in folder.glob(f"*{suffix}") if path.is_file()]
+    return sorted(files)
+
+
+def safe_project_path(relative_path: str) -> Path:
+    path = (PROJECT_ROOT / relative_path).resolve()
+    if PROJECT_ROOT not in path.parents and path != PROJECT_ROOT:
+        raise ValueError("Path escapes project root.")
+    return path
+
+
+def read_static_file(request_path: str) -> tuple[bytes, str] | None:
+    relative = request_path.lstrip("/") or "index.html"
+    if relative == "":
+        relative = "index.html"
+
+    file_path = (UI_DIR / relative).resolve()
+    if UI_DIR not in file_path.parents and file_path != UI_DIR / "index.html":
+        return None
+    if not file_path.exists() or not file_path.is_file():
+        return None
+
+    suffix_map = {
+        ".html": "text/html; charset=utf-8",
+        ".css": "text/css; charset=utf-8",
+        ".js": "application/javascript; charset=utf-8",
+        ".json": "application/json; charset=utf-8",
+        ".svg": "image/svg+xml",
+    }
+    content_type = suffix_map.get(file_path.suffix.lower(), "application/octet-stream")
+    return file_path.read_bytes(), content_type
+
+
+class UIRequestHandler(BaseHTTPRequestHandler):
+    def log_message(self, format: str, *args) -> None:  # noqa: A003
+        return
+
+    def do_GET(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+
+        if parsed.path == "/api/options":
+            payload = {
+                "methods": ["custom", "chawathe", "nj"],
+                "modes": {
+                    "xml": {
+                        "files": list_relative_files(DATA_DIR / "normalized_xml", ".xml"),
+                    },
+                    "wiki": {
+                        "files": list_relative_files(DATA_DIR / "original_infobox_source", ".wiki"),
+                    },
+                },
+            }
+            json_response(self, payload)
+            return
+
+        if parsed.path == "/api/file":
+            query = parse_qs(parsed.query)
+            relative_path = query.get("path", [""])[0]
+            if not relative_path:
+                json_response(self, {"error": "Missing path parameter."}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            try:
+                file_path = safe_project_path(relative_path)
+            except ValueError:
+                json_response(self, {"error": "Invalid path."}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            if not file_path.exists() or not file_path.is_file():
+                json_response(self, {"error": "File not found."}, status=HTTPStatus.NOT_FOUND)
+                return
+
+            text_response(self, file_path.read_text(encoding="utf-8"))
+            return
+
+        static = read_static_file(parsed.path if parsed.path != "/" else "/index.html")
+        if static is None:
+            self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+            return
+
+        body, content_type = static
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_POST(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+        if parsed.path != "/api/compare":
+            self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+            return
+
+        content_length = int(self.headers.get("Content-Length", "0"))
+        raw_body = self.rfile.read(content_length)
+
+        try:
+            payload = json.loads(raw_body.decode("utf-8"))
+        except json.JSONDecodeError:
+            json_response(self, {"error": "Invalid JSON body."}, status=HTTPStatus.BAD_REQUEST)
+            return
+
+        mode = str(payload.get("mode", "")).lower()
+        method = str(payload.get("method", "custom")).lower()
+        file1 = str(payload.get("file1", ""))
+        file2 = str(payload.get("file2", ""))
+
+        if mode not in {"xml", "wiki"}:
+            json_response(self, {"error": "Mode must be xml or wiki."}, status=HTTPStatus.BAD_REQUEST)
+            return
+        if method not in {"custom", "chawathe", "nj"}:
+            json_response(self, {"error": "Unsupported method."}, status=HTTPStatus.BAD_REQUEST)
+            return
+        if not file1 or not file2:
+            json_response(self, {"error": "Both file selections are required."}, status=HTTPStatus.BAD_REQUEST)
+            return
+
+        try:
+            abs_file1 = safe_project_path(file1)
+            abs_file2 = safe_project_path(file2)
+        except ValueError:
+            json_response(self, {"error": "Invalid file path."}, status=HTTPStatus.BAD_REQUEST)
+            return
+
+        if not abs_file1.exists() or not abs_file2.exists():
+            json_response(self, {"error": "Selected file does not exist."}, status=HTTPStatus.BAD_REQUEST)
+            return
+
+        try:
+            result = compare_documents(
+                mode=mode,
+                file1=os.fspath(abs_file1),
+                file2=os.fspath(abs_file2),
+                method=method,
+                output_dir=os.fspath(DATA_DIR / "output"),
+            )
+        except Exception as exc:  # pragma: no cover - defensive API path
+            json_response(self, {"error": str(exc)}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        json_response(self, result)
+
+
+def main() -> None:
+    server = ThreadingHTTPServer((HOST, PORT), UIRequestHandler)
+    print(f"Project UI available at http://{HOST}:{PORT}")
+    print("Press Ctrl+C to stop the server.")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nShutting down UI server.")
+    finally:
+        server.server_close()
+
+
+if __name__ == "__main__":
+    main()

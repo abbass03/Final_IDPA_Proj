@@ -7,6 +7,7 @@ from .common import clone_tree, similarity_from_distance
 from .tree_validation import validate_tree
 from .edit_script import EditOperation, LDPairNode, TedResult
 from .tree import TreeNode
+from semantic_values import semantic_value_distance
 
 
 INF = 10 ** 9
@@ -40,7 +41,9 @@ def chawathe_tree_to_ld_pairs(root: TreeNode) -> List[LDPairNode]:
 
 
 def _node_update_cost(a: LDPairNode, b: LDPairNode) -> int:
-    return 0 if (a.label == b.label and a.value == b.value) else 1
+    label_cost = 0 if a.label == b.label else 1
+    value_cost = semantic_value_distance(a.value, b.value)
+    return label_cost + value_cost
 
 
 def _update_allowed(a: LDPairNode, b: LDPairNode) -> bool:

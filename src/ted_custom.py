@@ -3,6 +3,7 @@ from models import Node
 from utils import subtree_size
 from diff import EditOp
 from urllib.parse import quote
+from semantic_values import semantic_value_distance
 
 def encode_label(label: str) -> str:
     return quote(label, safe="")
@@ -21,8 +22,7 @@ def update_cost(a: Node, b: Node) -> int:
         cost += 1
     if a.node_type != b.node_type:
         cost += 1
-    if (a.value or "") != (b.value or ""):
-        cost += 1
+    cost += semantic_value_distance(a.value, b.value)
     return cost
 
 
