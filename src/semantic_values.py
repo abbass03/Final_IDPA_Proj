@@ -239,6 +239,23 @@ def semantic_value_distance(left: str | None, right: str | None) -> int:
 
         left_num = float(a["number"])
         right_num = float(b["number"])
+
+        unit     = a.get("unit") or ""
+        currency = a.get("currency") or ""
+
+        # Year-estimate pattern: "2023 estimate", "2026 projection", etc.
+        # The number is a calendar year (1800-2100) and the unit is a plain word.
+        # Relative difference is tiny (~0.1%) but the years are semantically different.
+        if 1800 <= left_num <= 2100 and 1800 <= right_num <= 2100 and unit.isalpha():
+            return 0 if left_num == right_num else 1
+
+        # Bare-number identifiers (no unit, no currency): phone codes, ISO codes,
+        # ranking numbers, etc.  Percentage-relative tolerance is meaningless here —
+        # +503 and +502 are different countries' calling codes even though they
+        # differ by only 0.2 %.  Use exact comparison instead.
+        if not unit and not currency:
+            return 0 if left_num == right_num else 1
+
         baseline = max(abs(left_num), abs(right_num), 1.0)
         relative_delta = abs(left_num - right_num) / baseline
 

@@ -120,6 +120,7 @@ class _NJEngine:
         self._source_key = _nj_tree_to_key(source_root)
         self._target_key = _nj_tree_to_key(target_root)
         self._memo: Dict[Tuple[int, int], _PairResult] = {}
+        self._dist_memo: Dict[Tuple[int, int], int] = {}
 
     def source_ref(self, node: TreeNode) -> str:
         return self.source_refs[id(node)]
@@ -136,6 +137,40 @@ class _NJEngine:
         if _contained_in_cached(_nj_tree_to_key(subtree), self._source_key):
             return 1
         return nj_tree_size(subtree)
+
+    def compare_distance(self, a: TreeNode, b: TreeNode) -> int:
+        """Distance-only compare: same DP as compare() but no choice matrix or ops."""
+        key = (id(a), id(b))
+        if key in self._dist_memo:
+            return self._dist_memo[key]
+
+        root_cost = _update_cost(a, b)
+        m = len(a.children)
+        n = len(b.children)
+
+        dist = [[0] * (n + 1) for _ in range(m + 1)]
+        dist[0][0] = root_cost
+
+        for i in range(1, m + 1):
+            dist[i][0] = dist[i - 1][0] + self.del_tree_cost(a.children[i - 1])
+        for j in range(1, n + 1):
+            dist[0][j] = dist[0][j - 1] + self.ins_tree_cost(b.children[j - 1])
+
+        for i in range(1, m + 1):
+            ca = a.children[i - 1]
+            del_ca = self.del_tree_cost(ca)
+            for j in range(1, n + 1):
+                cb = b.children[j - 1]
+                best = min(
+                    dist[i - 1][j - 1] + self.compare_distance(ca, cb),
+                    dist[i - 1][j] + del_ca,
+                    dist[i][j - 1] + self.ins_tree_cost(cb),
+                )
+                dist[i][j] = best
+
+        result = dist[m][n]
+        self._dist_memo[key] = result
+        return result
 
     def compare(self, a: TreeNode, b: TreeNode) -> _PairResult:
         key = (id(a), id(b))
@@ -262,6 +297,17 @@ class _NJEngine:
 
         raise NiermanJagadishError(f"Unsupported backpointer kind '{kind}'.")
         
+
+def compute_distance_nj_only(
+    source_root: TreeNode,
+    target_root: TreeNode,
+) -> int:
+    """Distance-only NJ: skips clone_tree, choice matrix, and op construction."""
+    validate_tree(source_root)
+    validate_tree(target_root)
+    engine = _NJEngine(source_root, target_root)
+    return engine.compare_distance(source_root, target_root)
+
 
 def compute_ted_nj(
     source_root: TreeNode,

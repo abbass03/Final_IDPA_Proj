@@ -71,6 +71,14 @@ def find_child_position(parent: Node, target: Node) -> int:
 
 
 def apply_update(node: Node, op: EditOp) -> None:
+    if op.new_node is not None:
+        # Full subtree replacement (promoted DELETE+INSERT pair): copy both
+        # value and children from the target node so the tree matches exactly.
+        replacement = Node.from_dict(op.new_node)
+        node.label = replacement.label
+        node.value = replacement.value
+        node.children = replacement.children
+        return
     if op.new_label is not None:
         node.label = op.new_label
     if op.new_value is not None or op.old_value is not None:
@@ -130,10 +138,51 @@ def apply_edit_script(root: Node, ops: list[EditOp]) -> Node:
     update_ops = [op for op in visible_ops if op.op == "update"]
     insert_ops = [op for op in visible_ops if op.op == "insert"]
 
-    update_ops.sort(
-        key=lambda op: (path_depth(op.path), parsed_last_index(op.path)),
-        reverse=True
-    )
+    # When TED's cost model prefers DELETE+INSERT (cost=2) over UPDATE (cost=3)
+    # for leaf nodes with very different values, it emits two separate ops at the
+    # same path.  Promote any such pair to a single in-place UPDATE.
+    # Restriction: only promote at path depth >= 3 (i.e. #text nodes and deeper).
+    # Depth-2 structural fields may need to MOVE position (different insert_pos),
+    # so promoting them to an in-place UPDATE would anchor them at the wrong slot.
+    delete_by_path = {op.path: op for op in delete_ops}
+    promoted: list[EditOp] = []
+    consumed: set[str] = set()
+    remaining_inserts: list[EditOp] = []
+
+    for ins in insert_ops:
+        if ins.path in delete_by_path and path_depth(ins.path) >= 3:
+            del_op = delete_by_path[ins.path]
+            # Store new_node so apply_update can replace children too.
+            promoted.append(EditOp(
+                op="update",
+                path=ins.path,
+                old_label=del_op.old_label,
+                new_label=ins.new_label if ins.new_label is not None else del_op.old_label,
+                old_value=del_op.old_value,
+                new_value=ins.new_value,
+                new_node=ins.new_node,
+            ))
+            consumed.add(ins.path)
+        else:
+            remaining_inserts.append(ins)
+
+    # The promoted UPDATE replaces the entire subtree at that path.  Any
+    # INSERT or DELETE ops targeting descendants of that path are now wrong
+    # (they would operate on an already-correct subtree).  Remove them.
+    def _is_descendant(child_path: str, parent_path: str) -> bool:
+        return child_path.startswith(parent_path + "/")
+
+    delete_ops = [
+        op for op in delete_ops
+        if op.path not in consumed
+        and not any(_is_descendant(op.path, pp) for pp in consumed)
+    ]
+    remaining_inserts = [
+        op for op in remaining_inserts
+        if not any(_is_descendant(op.path, pp) for pp in consumed)
+    ]
+    update_ops = update_ops + promoted
+    insert_ops = remaining_inserts
 
     delete_ops.sort(
         key=lambda op: (path_depth(op.path), parsed_last_index(op.path)),
@@ -147,23 +196,82 @@ def apply_edit_script(root: Node, ops: list[EditOp]) -> Node:
         )
     )
 
+    # Ops that touch tokenized_value / parsed_date / parsed_measurement subtrees
+    # are unreliable: sequential position drift inside long token sequences causes
+    # wrong child counts.  Skip them entirely — we rebuild those children below.
+    _SEMANTIC_LABELS = {"tokenized_value", "parsed_date", "parsed_measurement",
+                        "number_token", "word_token", "symbol_token",
+                        "direction_token", "month_token", "unit_token",
+                        "year", "month", "day", "number", "unit", "currency"}
+
+    def _touches_semantic(path: str) -> bool:
+        return any(seg.split("[")[0] in _SEMANTIC_LABELS
+                   for seg in path.lstrip("/").split("/"))
+
+    # Pre-resolve all UPDATE targets before applying any DELETEs.
+    # This prevents occurrence-count drift: when multiple UPDATEs relabel nodes
+    # to the same label (e.g. riksdag_speaker→prime_minister and prime_minister→
+    # chief_justice), sequential path lookups after the first relabeling pick up
+    # the wrong node.  Storing direct node references up front avoids that.
+    update_targets: list[tuple] = []
     for op in update_ops:
         try:
-            target = find_node_by_path(patched, op.path)
-            apply_update(target, op)
+            node = find_node_by_path(patched, op.path)
+            update_targets.append((node, op))
         except ValueError:
-            continue
+            pass
 
+    # Deletes run first: if TED relabels field A→B (UPDATE) and also deletes the
+    # original field B, running UPDATE first would create two B nodes and the
+    # occurrence-based DELETE lookup would then remove the wrong one.
     for op in delete_ops:
+        if _touches_semantic(op.path):
+            continue
         try:
             apply_delete(patched, op)
         except ValueError:
             continue
 
+    # Apply updates using pre-resolved node references (not path lookups).
+    for node, op in update_targets:
+        apply_update(node, op)
+
     for op in insert_ops:
+        if _touches_semantic(op.path):
+            continue
         try:
             apply_insert(patched, op)
         except ValueError:
             continue
 
+    # After all structural changes, rebuild every #text node's semantic children
+    # (tokenized_value, parsed_date, parsed_measurement) from its current value.
+    # This is equivalent to re-preprocessing only the text-leaf layer, so the
+    # analysis always matches what preprocess_tree would produce for the new value.
+    from preprocess import (
+        build_date_analysis,
+        build_measurement_analysis,
+        build_token_analysis,
+        normalize_text,
+    )
+
+    def _rebuild_text_node(node: Node) -> None:
+        if node.node_type == "text" and node.value is not None:
+            node.value = normalize_text(node.value)
+            children = []
+            d = build_date_analysis(node.value)
+            if d:
+                children.append(d)
+            m = build_measurement_analysis(node.value)
+            if m:
+                children.append(m)
+            t = build_token_analysis(node.value)
+            if t:
+                children.append(t)
+            node.children = children
+            return  # don't recurse into the newly built children
+        for child in node.children:
+            _rebuild_text_node(child)
+
+    _rebuild_text_node(patched)
     return patched

@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from comparison_service import compare_documents
+from cluster_service import available_countries, extract_submatrix, run_clustering as _run_clustering
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -78,6 +79,14 @@ class UIRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
 
+        if parsed.path == "/api/cluster/countries":
+            try:
+                countries = available_countries()
+                json_response(self, {"countries": countries})
+            except Exception as exc:
+                json_response(self, {"error": str(exc)}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         if parsed.path == "/api/options":
             payload = {
                 "methods": ["custom", "chawathe", "nj"],
@@ -127,6 +136,34 @@ class UIRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path == "/api/cluster/run":
+            content_length = int(self.headers.get("Content-Length", "0"))
+            raw_body = self.rfile.read(content_length)
+            try:
+                payload = json.loads(raw_body.decode("utf-8"))
+            except json.JSONDecodeError:
+                json_response(self, {"error": "Invalid JSON."}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            selected = payload.get("countries", [])
+            algorithm = str(payload.get("algorithm", "ahc")).lower()
+            params = payload.get("params", {})
+
+            if not selected or not isinstance(selected, list):
+                json_response(self, {"error": "countries must be a non-empty list."}, status=HTTPStatus.BAD_REQUEST)
+                return
+            if algorithm not in {"ahc", "kmedoids", "kmeans", "dbscan"}:
+                json_response(self, {"error": f"Unknown algorithm: {algorithm}"}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            try:
+                matrix = extract_submatrix(selected)
+                result = _run_clustering(selected, matrix, algorithm, params)
+                json_response(self, result)
+            except Exception as exc:
+                json_response(self, {"error": str(exc)}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         if parsed.path != "/api/compare":
             self.send_error(HTTPStatus.NOT_FOUND, "Not found")
             return

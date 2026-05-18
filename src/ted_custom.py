@@ -40,6 +40,52 @@ def ted(a: Node, b: Node) -> int:
     return cost
 
 
+# ---------------------------------------------------------------------------
+# Distance-only path (no edit script, no path strings, no backtracking)
+# Fixes the double-computation issue in ted_with_ops: the original backtrack
+# phase re-calls ted_with_ops for every matched pair. Here we compute each
+# subtree pair exactly once.
+# ---------------------------------------------------------------------------
+
+def _ted_dist(a: Node, b: Node, cache: dict) -> int:
+    key = (id(a), id(b))
+    if key in cache:
+        return cache[key]
+    cost = update_cost(a, b) + _child_seq_dist(a.children, b.children, cache)
+    cache[key] = cost
+    return cost
+
+
+def _child_seq_dist(children1: list[Node], children2: list[Node], cache: dict) -> int:
+    m = len(children1)
+    n = len(children2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(1, m + 1):
+        dp[i][0] = dp[i - 1][0] + delete_cost(children1[i - 1])
+    for j in range(1, n + 1):
+        dp[0][j] = dp[0][j - 1] + insert_cost(children2[j - 1])
+
+    for i in range(1, m + 1):
+        ci = children1[i - 1]
+        del_i = delete_cost(ci)
+        for j in range(1, n + 1):
+            cj = children2[j - 1]
+            best = min(
+                dp[i - 1][j] + del_i,
+                dp[i][j - 1] + insert_cost(cj),
+                dp[i - 1][j - 1] + _ted_dist(ci, cj, cache),
+            )
+            dp[i][j] = best
+
+    return dp[m][n]
+
+
+def ted_distance(a: Node, b: Node) -> int:
+    """Distance-only TED: no edit script generated. Each subtree pair computed once."""
+    return _ted_dist(a, b, {})
+
+
 def ted_with_ops(a: Node, b: Node, current_path: str) -> tuple[int, list[EditOp]]:
     ops: list[EditOp] = []
 

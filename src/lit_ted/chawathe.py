@@ -233,6 +233,17 @@ def _alignment_to_edit_ops(
     return operations
 
 
+def compute_distance_chawathe_only(
+    source_root: TreeNode,
+    target_root: TreeNode,
+) -> int:
+    """Distance-only Chawathe: runs only the DP matrix, skips backtracking and ops."""
+    a_seq = chawathe_tree_to_ld_pairs(source_root)
+    b_seq = chawathe_tree_to_ld_pairs(target_root)
+    dist = _compute_matrix(a_seq, b_seq)
+    return dist[len(a_seq)][len(b_seq)]
+
+
 def compute_ted_chawathe(
     source_root: TreeNode,
     target_root: TreeNode,

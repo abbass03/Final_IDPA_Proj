@@ -3,176 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infobox TED Studio</title>
+    <title>TED + Cluster Studio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="page-shell">
-        <aside class="control-panel">
-            <div class="brand-block">
-                <p class="eyebrow">Wikipedia Infobox Intelligence</p>
-                <h1>TED Studio</h1>
-                <p class="lede">Compare countries through structure, semantics, edit scripts, and patching in one interactive workspace.</p>
-            </div>
 
-            <div class="control-card">
-                <label for="modeSelect">Mode</label>
-                <select id="modeSelect"></select>
-
-                <label for="methodSelect">TED Method</label>
-                <select id="methodSelect"></select>
-
-                <label for="file1Select">Source Document</label>
-                <select id="file1Select"></select>
-
-                <label for="file2Select">Target Document</label>
-                <select id="file2Select"></select>
-
-                <div class="button-row">
-                    <button id="swapButton" class="ghost-button" type="button">Swap</button>
-                    <button id="compareButton" class="primary-button" type="button">Run Comparison</button>
-                </div>
-            </div>
-
-            <div class="control-card compact">
-                <h2>What This UI Shows</h2>
-                <ul class="feature-list">
-                    <li>Semantic tree distance with typed value awareness</li>
-                    <li>Live edit script review and patch validation</li>
-                    <li>Tree inspection for source, target, and patched outputs</li>
-                    <li>Readable XML, JSON, infobox, and report artifacts</li>
-                </ul>
-            </div>
-        </aside>
-
-        <main class="workspace">
-            <section class="hero-panel">
-                <div>
-                    <p class="eyebrow">Project Command Center</p>
-                    <h2>Make the comparison feel explainable, not mechanical.</h2>
-                </div>
-                <div id="statusPill" class="status-pill idle">Ready</div>
-            </section>
-
-            <section class="metrics-grid">
-                <article class="metric-card">
-                    <p class="metric-label">Distance</p>
-                    <p id="distanceValue" class="metric-value">-</p>
-                </article>
-                <article class="metric-card">
-                    <p class="metric-label">Similarity</p>
-                    <p id="similarityValue" class="metric-value">-</p>
-                </article>
-                <article class="metric-card">
-                    <p class="metric-label">Patch Status</p>
-                    <p id="patchValue" class="metric-value">-</p>
-                </article>
-                <article class="metric-card">
-                    <p class="metric-label">Visible Operations</p>
-                    <p id="opsValue" class="metric-value">-</p>
-                </article>
-            </section>
-
-            <section class="summary-strip">
-                <div class="summary-card">
-                    <span>Tree 1 Nodes</span>
-                    <strong id="tree1Nodes">-</strong>
-                </div>
-                <div class="summary-card">
-                    <span>Tree 2 Nodes</span>
-                    <strong id="tree2Nodes">-</strong>
-                </div>
-                <div class="summary-card">
-                    <span>Inserts</span>
-                    <strong id="insertCount">-</strong>
-                </div>
-                <div class="summary-card">
-                    <span>Deletes</span>
-                    <strong id="deleteCount">-</strong>
-                </div>
-                <div class="summary-card">
-                    <span>Updates</span>
-                    <strong id="updateCount">-</strong>
-                </div>
-            </section>
-
-            <section class="tab-section">
-                <div class="tab-bar">
-                    <button class="tab-button active" data-tab="overview">Overview</button>
-                    <button class="tab-button" data-tab="operations">Operations</button>
-                    <button class="tab-button" data-tab="trees">Trees</button>
-                    <button class="tab-button" data-tab="artifacts">Artifacts</button>
-                </div>
-
-                <div id="overviewTab" class="tab-panel active">
-                    <div class="two-column">
-                        <article class="content-card">
-                            <h3>Run Summary</h3>
-                            <pre id="reportView" class="code-block empty-state">Run a comparison to see the generated report.</pre>
-                        </article>
-                        <article class="content-card">
-                            <h3>Selected Documents</h3>
-                            <div class="preview-stack">
-                                <div>
-                                    <p class="small-label">Source</p>
-                                    <pre id="sourcePreview" class="code-block empty-state">No file selected.</pre>
-                                </div>
-                                <div>
-                                    <p class="small-label">Target</p>
-                                    <pre id="targetPreview" class="code-block empty-state">No file selected.</pre>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-
-                <div id="operationsTab" class="tab-panel">
-                    <article class="content-card">
-                        <div class="section-header">
-                            <h3>Edit Script</h3>
-                            <p id="opsSubtitle">No operations loaded.</p>
-                        </div>
-                        <div id="operationsList" class="operations-list empty-state">Run a comparison to inspect operations.</div>
-                    </article>
-                </div>
-
-                <div id="treesTab" class="tab-panel">
-                    <div class="three-column">
-                        <article class="content-card">
-                            <h3>Source Tree</h3>
-                            <div id="tree1View" class="tree-view empty-state">No tree loaded.</div>
-                        </article>
-                        <article class="content-card">
-                            <h3>Target Tree</h3>
-                            <div id="tree2View" class="tree-view empty-state">No tree loaded.</div>
-                        </article>
-                        <article class="content-card">
-                            <h3>Patched Tree</h3>
-                            <div id="patchedTreeView" class="tree-view empty-state">No tree loaded.</div>
-                        </article>
-                    </div>
-                </div>
-
-                <div id="artifactsTab" class="tab-panel">
-                    <article class="content-card">
-                        <div class="artifact-switcher">
-                            <button class="artifact-button active" data-artifact="tree1_json">Tree 1 JSON</button>
-                            <button class="artifact-button" data-artifact="tree2_json">Tree 2 JSON</button>
-                            <button class="artifact-button" data-artifact="patched_json">Patched JSON</button>
-                            <button class="artifact-button" data-artifact="tree1_xml">Tree 1 XML</button>
-                            <button class="artifact-button" data-artifact="tree2_xml">Tree 2 XML</button>
-                            <button class="artifact-button" data-artifact="patched_xml">Patched XML</button>
-                            <button class="artifact-button" data-artifact="tree1_infobox">Tree 1 Infobox</button>
-                            <button class="artifact-button" data-artifact="tree2_infobox">Tree 2 Infobox</button>
-                            <button class="artifact-button" data-artifact="patched_infobox">Patched Infobox</button>
-                        </div>
-                        <pre id="artifactView" class="code-block empty-state">Run a comparison to inspect generated artifacts.</pre>
-                    </article>
-                </div>
-            </section>
-        </main>
+<!-- ── Top navigation ──────────────────────────────────────────────────── -->
+<nav class="app-nav">
+    <div class="nav-brand">
+        <span class="nav-title">Wikipedia Infobox Intelligence</span>
     </div>
+    <div class="nav-tabs">
+        <button class="nav-btn active" data-section="comparison">Project 1 — Comparison</button>
+        <button class="nav-btn" data-section="clustering">Project 2 — Clustering</button>
+    </div>
+</nav>
 
-    <script src="app.js"></script>
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 1 — COMPARISON                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div id="comparisonSection">
+<div class="page-shell">
+    <aside class="control-panel">
+        <div class="brand-block">
+            <p class="eyebrow">Tree Edit Distance</p>
+            <h1>TED Studio</h1>
+            <p class="lede">Compare countries through structure, semantics, edit scripts, and patching.</p>
+        </div>
+
+        <div class="control-card">
+            <label for="modeSelect">Mode</label>
+            <select id="modeSelect"></select>
+            <label for="methodSelect">TED Method</label>
+            <select id="methodSelect"></select>
+            <label for="file1Select">Source Document</label>
+            <select id="file1Select"></select>
+            <label for="file2Select">Target Document</label>
+            <select id="file2Select"></select>
+            <div class="button-row">
+                <button id="swapButton" class="ghost-button" type="button">Swap</button>
+                <button id="compareButton" class="primary-button" type="button">Run Comparison</button>
+            </div>
+        </div>
+
+        <div class="control-card compact">
+            <h2>What This UI Shows</h2>
+            <ul class="feature-list">
+                <li>Semantic tree distance with typed value awareness</li>
+                <li>Live edit script review and patch validation</li>
+                <li>Tree inspection for source, target, and patched outputs</li>
+                <li>Readable XML, JSON, infobox, and report artifacts</li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <section class="hero-panel">
+            <div>
+                <p class="eyebrow">Project 1 — Tree Edit Distance</p>
+                <h2>Make the comparison feel explainable, not mechanical.</h2>
+            </div>
+            <div id="statusPill" class="status-pill idle">Ready</div>
+        </section>
+
+        <section class="metrics-grid">
+            <article class="metric-card">
+                <p class="metric-label">Distance</p>
+                <p id="distanceValue" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Similarity</p>
+                <p id="similarityValue" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Patch Status</p>
+                <p id="patchValue" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Visible Operations</p>
+                <p id="opsValue" class="metric-value">-</p>
+            </article>
+        </section>
+
+        <section class="summary-strip">
+            <div class="summary-card"><span>Tree 1 Nodes</span><strong id="tree1Nodes">-</strong></div>
+            <div class="summary-card"><span>Tree 2 Nodes</span><strong id="tree2Nodes">-</strong></div>
+            <div class="summary-card"><span>Inserts</span><strong id="insertCount">-</strong></div>
+            <div class="summary-card"><span>Deletes</span><strong id="deleteCount">-</strong></div>
+            <div class="summary-card"><span>Updates</span><strong id="updateCount">-</strong></div>
+        </section>
+
+        <section class="tab-section">
+            <div class="tab-bar">
+                <button class="tab-button active" data-tab="overview">Overview</button>
+                <button class="tab-button" data-tab="operations">Operations</button>
+                <button class="tab-button" data-tab="trees">Trees</button>
+                <button class="tab-button" data-tab="artifacts">Artifacts</button>
+            </div>
+
+            <div id="overviewTab" class="tab-panel active">
+                <div class="two-column">
+                    <article class="content-card">
+                        <h3>Run Summary</h3>
+                        <pre id="reportView" class="code-block empty-state">Run a comparison to see the generated report.</pre>
+                    </article>
+                    <article class="content-card">
+                        <h3>Selected Documents</h3>
+                        <div class="preview-stack">
+                            <div>
+                                <p class="small-label">Source</p>
+                                <pre id="sourcePreview" class="code-block empty-state">No file selected.</pre>
+                            </div>
+                            <div>
+                                <p class="small-label">Target</p>
+                                <pre id="targetPreview" class="code-block empty-state">No file selected.</pre>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="operationsTab" class="tab-panel">
+                <article class="content-card">
+                    <div class="section-header">
+                        <h3>Edit Script</h3>
+                        <p id="opsSubtitle">No operations loaded.</p>
+                    </div>
+                    <div id="operationsList" class="operations-list empty-state">Run a comparison to inspect operations.</div>
+                </article>
+            </div>
+
+            <div id="treesTab" class="tab-panel">
+                <div class="three-column">
+                    <article class="content-card">
+                        <h3>Source Tree</h3>
+                        <div id="tree1View" class="tree-view empty-state">No tree loaded.</div>
+                    </article>
+                    <article class="content-card">
+                        <h3>Target Tree</h3>
+                        <div id="tree2View" class="tree-view empty-state">No tree loaded.</div>
+                    </article>
+                    <article class="content-card">
+                        <h3>Patched Tree</h3>
+                        <div id="patchedTreeView" class="tree-view empty-state">No tree loaded.</div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="artifactsTab" class="tab-panel">
+                <article class="content-card">
+                    <div class="artifact-switcher">
+                        <button class="artifact-button active" data-artifact="tree1_json">Tree 1 JSON</button>
+                        <button class="artifact-button" data-artifact="tree2_json">Tree 2 JSON</button>
+                        <button class="artifact-button" data-artifact="patched_json">Patched JSON</button>
+                        <button class="artifact-button" data-artifact="tree1_xml">Tree 1 XML</button>
+                        <button class="artifact-button" data-artifact="tree2_xml">Tree 2 XML</button>
+                        <button class="artifact-button" data-artifact="patched_xml">Patched XML</button>
+                        <button class="artifact-button" data-artifact="tree1_infobox">Tree 1 Infobox</button>
+                        <button class="artifact-button" data-artifact="tree2_infobox">Tree 2 Infobox</button>
+                        <button class="artifact-button" data-artifact="patched_infobox">Patched Infobox</button>
+                    </div>
+                    <pre id="artifactView" class="code-block empty-state">Run a comparison to inspect generated artifacts.</pre>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+</div><!-- /comparisonSection -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 2 — CLUSTERING                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div id="clusteringSection" style="display:none">
+<div class="page-shell cluster-shell">
+
+    <!-- ── Left control panel ──────────────────────────────────────────── -->
+    <aside class="control-panel cluster-panel">
+        <div class="brand-block">
+            <p class="eyebrow">Cluster Analysis</p>
+            <h1>Cluster Studio</h1>
+            <p class="lede">Select countries, pick an algorithm, and explore how Wikipedia structures the world.</p>
+        </div>
+
+        <!-- Country selector -->
+        <div class="control-card">
+            <div class="country-header">
+                <h3 style="margin-bottom:0">Countries</h3>
+                <span id="selectedCount" class="selection-badge">0 selected</span>
+            </div>
+            <input type="text" id="countrySearch" class="country-search" placeholder="Search countries...">
+            <div class="quick-btns">
+                <button id="selectAllBtn" class="ghost-button small-btn">Select All</button>
+                <button id="clearAllBtn" class="ghost-button small-btn">Clear All</button>
+            </div>
+            <div id="countryList" class="country-list"></div>
+        </div>
+
+        <!-- Algorithm + params -->
+        <div class="control-card">
+            <label for="algorithmSelect">Algorithm</label>
+            <select id="algorithmSelect">
+                <option value="ahc">Agglomerative Clustering (AHC)</option>
+                <option value="kmedoids">K-Medoids (PAM)</option>
+                <option value="kmeans">K-Means (via MDS)</option>
+                <option value="dbscan">DBSCAN</option>
+            </select>
+
+            <!-- AHC -->
+            <div id="ahcParams" class="algo-params">
+                <label for="ahcK">Number of clusters (k)</label>
+                <input type="number" id="ahcK" class="param-input" value="5" min="2" max="50">
+                <label for="linkageSelect">Linkage strategy</label>
+                <select id="linkageSelect">
+                    <option value="average">Average (UPGMA)</option>
+                    <option value="complete">Complete</option>
+                    <option value="single">Single</option>
+                </select>
+            </div>
+
+            <!-- K-Medoids -->
+            <div id="kmedoidsParams" class="algo-params" style="display:none">
+                <label for="kmedK">Number of clusters (k)</label>
+                <input type="number" id="kmedK" class="param-input" value="5" min="2" max="50">
+            </div>
+
+            <!-- K-Means -->
+            <div id="kmeansParams" class="algo-params" style="display:none">
+                <label for="kmeansK">Number of clusters (k)</label>
+                <input type="number" id="kmeansK" class="param-input" value="5" min="2" max="50">
+                <p class="param-note">Runs Lloyd's algorithm on the 2-D MDS projection of the distance matrix.</p>
+            </div>
+
+            <!-- DBSCAN -->
+            <div id="dbscanParams" class="algo-params" style="display:none">
+                <label for="dbscanEps">Epsilon (neighbourhood radius)</label>
+                <input type="number" id="dbscanEps" class="param-input" value="300" min="1" step="10">
+                <label for="dbscanMin">Min points (core threshold)</label>
+                <input type="number" id="dbscanMin" class="param-input" value="2" min="1" max="30">
+                <p class="param-note">Preprocessed distance range: 226 – 953 &nbsp;|&nbsp; median 458</p>
+            </div>
+
+            <button id="runClusterBtn" class="primary-button run-btn">Run Clustering</button>
+        </div>
+    </aside>
+
+    <!-- ── Main workspace ──────────────────────────────────────────────── -->
+    <main class="workspace">
+        <section class="hero-panel">
+            <div>
+                <p class="eyebrow">Project 2 — Clustering</p>
+                <h2>Group 193 countries by infobox structure.</h2>
+            </div>
+            <div id="clusterStatusPill" class="status-pill idle">Ready</div>
+        </section>
+
+        <!-- Metrics -->
+        <section class="metrics-grid">
+            <article class="metric-card">
+                <p class="metric-label">Clusters</p>
+                <p id="cMetricClusters" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Silhouette</p>
+                <p id="cMetricSilhouette" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Dunn Index</p>
+                <p id="cMetricDunn" class="metric-value">-</p>
+            </article>
+            <article class="metric-card">
+                <p class="metric-label">Countries</p>
+                <p id="cMetricCountries" class="metric-value">-</p>
+            </article>
+        </section>
+
+        <!-- Tabs -->
+        <section class="tab-section">
+            <div class="tab-bar">
+                <button class="tab-button active" data-ctab="scatter">Scatter (MDS)</button>
+                <button class="tab-button" data-ctab="heatmap">Distance Matrix</button>
+                <button class="tab-button" data-ctab="clusters">Cluster Table</button>
+                <button class="tab-button" data-ctab="dendrogram">Dendrogram</button>
+            </div>
+
+            <!-- Scatter -->
+            <div id="scatterTab" class="tab-panel active">
+                <article class="content-card">
+                    <div class="section-header">
+                        <h3>2-D MDS Projection</h3>
+                        <p id="scatterNote" style="margin:0;color:var(--muted);font-size:.83rem">Run clustering to see the projection.</p>
+                    </div>
+                    <div class="canvas-wrap">
+                        <canvas id="scatterCanvas" width="860" height="520"></canvas>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Heatmap -->
+            <div id="heatmapTab" class="tab-panel">
+                <article class="content-card">
+                    <div class="section-header">
+                        <h3>Pairwise Distance Heatmap</h3>
+                        <p style="margin:0;color:var(--muted);font-size:.83rem">Cool = closer &nbsp;|&nbsp; Warm = farther</p>
+                    </div>
+                    <div class="canvas-wrap canvas-scroll">
+                        <canvas id="heatmapCanvas"></canvas>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cluster table -->
+            <div id="clustersTab" class="tab-panel">
+                <article class="content-card">
+                    <h3>Cluster Assignments</h3>
+                    <div id="clusterTableWrap" class="cluster-table-wrap">
+                        <p class="empty-state" style="padding:16px">Run clustering to see assignments.</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Dendrogram -->
+            <div id="dendrogramTab" class="tab-panel">
+                <article class="content-card">
+                    <div class="section-header">
+                        <h3>Dendrogram</h3>
+                        <p style="margin:0;color:var(--muted);font-size:.83rem">Available for AHC only</p>
+                    </div>
+                    <div class="canvas-wrap canvas-scroll">
+                        <canvas id="dendrogramCanvas"></canvas>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+</div><!-- /clusteringSection -->
+
+<script src="app.js"></script>
 </body>
 </html>

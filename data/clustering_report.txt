@@ -1,0 +1,129 @@
+CLUSTERING ANALYSIS REPORT
+Tree Edit Distance on Wikipedia Country Infoboxes
+Dataset: 193 countries, Chawathe TED, raw trees
+Distance range: 45 - 119  |  Mean: 79.1  |  Median: 78
+======================================================================
+
+SECTION 1: COMPARISON TABLE
+----------------------------------------------------------------------
+Algorithm                        k  Silhouette     Dunn  Cluster Sizes
+----------------------------------------------------------------------
+  AHC Single-Linkage             6     +0.1826   0.7545  [188, 1, 1, 1, 1, 1]
+  AHC Single-Linkage             8     +0.1858   0.7615  [186, 1, 1, 1, 1, 1, 1, 1]
+  AHC Single-Linkage            10     +0.1843   0.7431  [184, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  AHC Complete-Linkage           6     +0.1518   0.7075  [181, 5, 3, 2, 1, 1]
+  AHC Complete-Linkage           8     +0.1373   0.6442  [177, 4, 3, 3, 2, 2, 1, 1]
+  AHC Complete-Linkage          10     +0.1433   0.6569  [176, 4, 3, 2, 2, 2, 1, 1, 1, 1]
+  AHC Average-Linkage            6     +0.1884   0.7545  [188, 1, 1, 1, 1, 1]
+  AHC Average-Linkage            8     +0.1846   0.7364  [186, 1, 1, 1, 1, 1, 1, 1]
+  AHC Average-Linkage           10     +0.1855   0.7091  [184, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  K-Medoids (PAM)                5     +0.0019   0.3782  [101, 29, 27, 21, 15]
+  K-Medoids (PAM)                6     -0.0002   0.3782  [95, 27, 21, 21, 15, 14]
+  K-Medoids (PAM)                7     +0.0065   0.3782  [94, 27, 21, 21, 15, 14, 1]
+  DBSCAN eps=51 min=2            6     +0.1278   0.9123  [4, 3, 3, 2, 2, 2]
+  DBSCAN eps=52 min=2            6     +0.1069   0.8281  [7, 4, 3, 3, 3, 2]
+  DBSCAN eps=53 min=2            4     +0.0781   0.7534  [21, 3, 2, 2]
+  DBSCAN eps=54 min=2            4     +0.0598   0.7143  [28, 4, 4, 2]
+  DBSCAN eps=55 min=2            3     +0.0386   0.7089  [40, 8, 2]
+
+SECTION 2: K-MEDOIDS DETAILED RESULTS
+----------------------------------------------------------------------
+K-Medoids k=5  silhouette=0.0019  dunn=0.3782  total_cost=12218
+Medoids: ['cape_verde', 'lesotho', 'germany', 'uruguay', 'jamaica']
+  Cluster 0 (101): ['afghanistan', 'algeria', 'angola', 'armenia', 'azerbaijan', 'bahrain', 'bangladesh', 'belarus', 'benin', 'botswana', 'brunei', 'burkina_faso', 'cameroon', 'cape_verde', 'central_african_republic', 'china', 'comoros', 'costa_rica', 'democratic_republic_of_the_congo', 'djibouti', 'dominica', 'ecuador', 'eritrea', 'estonia', 'ethiopia', 'federated_states_of_micronesia', 'fiji', 'georgia_country_', 'ghana', 'greece', 'guatemala', 'guinea', 'guinea-bissau', 'guyana', 'honduras', 'iceland', 'indonesia', 'iraq', 'israel', 'ivory_coast', 'kiribati', 'kuwait', 'laos', 'latvia', 'lebanon', 'libya', 'liechtenstein', 'madagascar', 'malawi', 'maldives', 'mali', 'marshall_islands', 'mauritania', 'mauritius', 'mongolia', 'mozambique', 'namibia', 'nepal', 'nicaragua', 'niger', 'north_korea', 'oman', 'pakistan', 'palau', 'panama', 'peru', 'portugal', 'qatar', 'russia', 's_o_tom_and_pr_ncipe', 'saint_kitts_and_nevis', 'samoa', 'senegal', 'serbia', 'seychelles', 'sierra_leone', 'singapore', 'south_africa', 'south_korea', 'south_sudan', 'sri_lanka', 'sudan', 'suriname', 'syria', 'tajikistan', 'tanzania', 'the_gambia', 'timor-leste', 'togo', 'tonga', 'tunisia', 'turkmenistan', 'tuvalu', 'uganda', 'ukraine', 'united_arab_emirates', 'vanuatu', 'venezuela', 'vietnam', 'zambia', 'zimbabwe']
+  Cluster 1 (27): ['barbados', 'bhutan', 'bosnia_and_herzegovina', 'burundi', 'cambodia', 'chad', 'equatorial_guinea', 'eswatini', 'gabon', 'india', 'japan', 'jordan', 'kazakhstan', 'kenya', 'lesotho', 'luxembourg', 'malaysia', 'myanmar', 'netherlands', 'new_zealand', 'republic_of_the_congo', 'rwanda', 'saudi_arabia', 'somalia', 'spain', 'trinidad_and_tobago', 'yemen']
+  Cluster 2 (29): ['albania', 'andorra', 'austria', 'bulgaria', 'croatia', 'cyprus', 'czech_republic', 'denmark', 'finland', 'france', 'germany', 'hungary', 'iran', 'italy', 'lithuania', 'malta', 'moldova', 'monaco', 'montenegro', 'nauru', 'north_macedonia', 'norway', 'poland', 'republic_of_ireland', 'san_marino', 'slovakia', 'slovenia', 'sweden', 'switzerland']
+  Cluster 3 (21): ['argentina', 'belgium', 'bolivia', 'brazil', 'chile', 'colombia', 'cuba', 'dominican_republic', 'el_salvador', 'haiti', 'kyrgyzstan', 'liberia', 'mexico', 'nigeria', 'paraguay', 'philippines', 'romania', 'turkey', 'united_states', 'uruguay', 'uzbekistan']
+  Cluster 4 (15): ['antigua_and_barbuda', 'australia', 'belize', 'canada', 'egypt', 'grenada', 'jamaica', 'morocco', 'papua_new_guinea', 'saint_lucia', 'saint_vincent_and_the_grenadines', 'solomon_islands', 'thailand', 'the_bahamas', 'united_kingdom']
+
+K-Medoids k=6  silhouette=-0.0002  dunn=0.3782  total_cost=12123
+Medoids: ['cape_verde', 'lesotho', 'germany', 'uruguay', 'jamaica', 'malta']
+  Cluster 0 (95): ['afghanistan', 'algeria', 'angola', 'armenia', 'azerbaijan', 'bahrain', 'bangladesh', 'belarus', 'benin', 'botswana', 'brunei', 'burkina_faso', 'cameroon', 'cape_verde', 'central_african_republic', 'china', 'comoros', 'costa_rica', 'democratic_republic_of_the_congo', 'djibouti', 'dominica', 'ecuador', 'eritrea', 'ethiopia', 'federated_states_of_micronesia', 'fiji', 'georgia_country_', 'ghana', 'guatemala', 'guinea', 'guinea-bissau', 'guyana', 'honduras', 'iceland', 'indonesia', 'iraq', 'israel', 'ivory_coast', 'kiribati', 'kuwait', 'laos', 'libya', 'madagascar', 'malawi', 'maldives', 'mali', 'marshall_islands', 'mauritania', 'mauritius', 'mongolia', 'mozambique', 'namibia', 'nepal', 'nicaragua', 'niger', 'north_korea', 'oman', 'pakistan', 'palau', 'panama', 'peru', 'portugal', 'qatar', 'russia', 's_o_tom_and_pr_ncipe', 'saint_kitts_and_nevis', 'samoa', 'senegal', 'serbia', 'seychelles', 'sierra_leone', 'south_africa', 'south_korea', 'south_sudan', 'sri_lanka', 'sudan', 'suriname', 'syria', 'tajikistan', 'tanzania', 'the_gambia', 'timor-leste', 'togo', 'tonga', 'tunisia', 'turkmenistan', 'tuvalu', 'uganda', 'ukraine', 'united_arab_emirates', 'vanuatu', 'venezuela', 'vietnam', 'zambia', 'zimbabwe']
+  Cluster 1 (27): ['barbados', 'bhutan', 'bosnia_and_herzegovina', 'burundi', 'cambodia', 'chad', 'equatorial_guinea', 'eswatini', 'gabon', 'india', 'japan', 'jordan', 'kazakhstan', 'kenya', 'lesotho', 'luxembourg', 'malaysia', 'myanmar', 'netherlands', 'new_zealand', 'republic_of_the_congo', 'rwanda', 'saudi_arabia', 'somalia', 'spain', 'trinidad_and_tobago', 'yemen']
+  Cluster 2 (21): ['andorra', 'austria', 'cyprus', 'czech_republic', 'denmark', 'finland', 'france', 'germany', 'hungary', 'iran', 'lithuania', 'monaco', 'montenegro', 'nauru', 'norway', 'poland', 'republic_of_ireland', 'slovakia', 'slovenia', 'sweden', 'switzerland']
+  Cluster 3 (21): ['argentina', 'belgium', 'bolivia', 'brazil', 'chile', 'colombia', 'cuba', 'dominican_republic', 'el_salvador', 'haiti', 'kyrgyzstan', 'liberia', 'mexico', 'nigeria', 'paraguay', 'philippines', 'romania', 'turkey', 'united_states', 'uruguay', 'uzbekistan']
+  Cluster 4 (15): ['antigua_and_barbuda', 'australia', 'belize', 'canada', 'egypt', 'grenada', 'jamaica', 'morocco', 'papua_new_guinea', 'saint_lucia', 'saint_vincent_and_the_grenadines', 'solomon_islands', 'thailand', 'the_bahamas', 'united_kingdom']
+  Cluster 5 (14): ['albania', 'bulgaria', 'croatia', 'estonia', 'greece', 'italy', 'latvia', 'lebanon', 'liechtenstein', 'malta', 'moldova', 'north_macedonia', 'san_marino', 'singapore']
+
+
+SECTION 3: DBSCAN MICRO-CLUSTERS (eps=51, min_samples=2)
+----------------------------------------------------------------------
+Total countries: 193  |  Clustered: 16  |  Noise: 177 (92%)
+
+  Cluster 0 (3): ['cape_verde', 's_o_tom_and_pr_ncipe', 'vanuatu']
+  Cluster 1 (3): ['dominica', 'saint_kitts_and_nevis', 'saint_vincent_and_the_grenadines']
+  Cluster 2 (2): ['el_salvador', 'guatemala']
+  Cluster 3 (2): ['ghana', 'sierra_leone']
+  Cluster 4 (4): ['grenada', 'jamaica', 'saint_lucia', 'the_bahamas']
+  Cluster 5 (2): ['papua_new_guinea', 'tuvalu']
+
+DBSCAN eps=52, min_samples=2:
+Total countries: 193  |  Clustered: 22  |  Noise: 171 (89%)
+
+  Cluster 0 (7): ['cape_verde', 'djibouti', 'papua_new_guinea', 's_o_tom_and_pr_ncipe', 'tajikistan', 'tuvalu', 'vanuatu']
+  Cluster 1 (3): ['chad', 'lesotho', 'republic_of_the_congo']
+  Cluster 2 (3): ['dominica', 'saint_kitts_and_nevis', 'saint_vincent_and_the_grenadines']
+  Cluster 3 (3): ['el_salvador', 'guatemala', 'honduras']
+  Cluster 4 (2): ['ghana', 'sierra_leone']
+  Cluster 5 (4): ['grenada', 'jamaica', 'saint_lucia', 'the_bahamas']
+
+SECTION 4: KEY FINDINGS AND INTERPRETATION
+----------------------------------------------------------------------
+
+1. AHC CHAINING EFFECT (all linkages):
+   All three AHC variants produce degenerate partitions: one giant cluster
+   containing ~184-188 countries plus k-1 singletons. This is the textbook
+   chaining effect, caused by the narrow TED distance range (45-119). Since
+   no large inter-cluster gap exists in the data, each AHC merge step absorbs
+   one country at a time rather than merging two large groups.
+   
+   Note: The inflated Silhouette (~0.18) and Dunn (~0.75) for AHC are
+   misleading artifacts of the singleton clusters, not evidence of good
+   clustering quality.
+
+2. K-MEDOIDS (PAM) - Most Balanced Partitioning:
+   K-Medoids forces a complete partition, yielding meaningful cluster sizes
+   at k=5: [101, 29, 27, 21, 15]. Medoids (cape_verde, lesotho, germany,
+   uruguay, jamaica) are structurally central countries in their respective
+   groups. The near-zero silhouette (~0.002) honestly reflects the lack of
+   sharp natural boundaries in the data - all inter-country distances are
+   within a 74-unit range.
+   
+   K-Medoids k=6 slightly loses cohesion (silhouette turns negative for k=6)
+   suggesting k=5 is the most stable global partition.
+
+3. DBSCAN - Geographically Coherent Micro-Clusters:
+   At eps=51-52 (well below the dataset mean of 79), DBSCAN finds tight
+   natural groupings with high geographic and political coherence:
+   
+   - Caribbean island nations (Grenada, Jamaica, Saint Lucia, The Bahamas)
+     share nearly identical infobox structure: area, population, GDP, HDI.
+   - Eastern Caribbean micro-states (Dominica, St Kitts & Nevis, St Vincent)
+     form their own tighter sub-cluster.
+   - Central American neighbors (El Salvador, Guatemala, Honduras) cluster
+     based on structural similarity of their Wikipedia infoboxes.
+   - West African pair (Ghana, Sierra Leone): similar economic profile fields.
+   - Pacific island states (Papua New Guinea, Tuvalu, Vanuatu): sparse
+     infoboxes with similar field sets.
+   
+   The 89% noise rate at eps=51 confirms that most countries are structurally
+   unique enough that no dense neighborhood exists. DBSCAN is therefore best
+   interpreted as a method to identify the MOST SIMILAR country pairs/triplets
+   rather than a global partitioning tool for this dataset.
+
+4. METRIC RELIABILITY:
+   - Silhouette: unreliable for AHC on this dataset (inflated by singletons).
+     More informative for K-Medoids and DBSCAN.
+   - Dunn Index: highest for DBSCAN (0.91) because the inter-cluster distances
+     are large relative to the tiny within-cluster diameters. AHC singletons
+     also score well for the same reason.
+   - Most honest metric: K-Medoids total_cost (sum of medoid distances).
+
+5. RECOMMENDATION:
+   - For a global view of 193 countries: K-Medoids k=5
+   - For identifying structurally similar country groups: DBSCAN eps=51-52
+   - AHC is academically instructive (shows the chaining problem) but not
+     practically useful for this dataset due to lack of cluster structure.
+
+======================================================================
+End of Report
