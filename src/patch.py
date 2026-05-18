@@ -199,13 +199,13 @@ def apply_edit_script(root: Node, ops: list[EditOp]) -> Node:
     # Ops that touch tokenized_value / parsed_date / parsed_measurement subtrees
     # are unreliable: sequential position drift inside long token sequences causes
     # wrong child counts.  Skip them entirely — we rebuild those children below.
-    _SEMANTIC_LABELS = {"tokenized_value", "parsed_date", "parsed_measurement",
-                        "number_token", "word_token", "symbol_token",
-                        "direction_token", "month_token", "unit_token",
-                        "year", "month", "day", "number", "unit", "currency"}
+    # Only check for the three semantic CONTAINER labels, not their leaf children
+    # (e.g. "currency", "year").  Leaf labels also appear as top-level structural
+    # field names, so including them would incorrectly skip real field INSERTs.
+    _SEMANTIC_CONTAINERS = {"tokenized_value", "parsed_date", "parsed_measurement"}
 
     def _touches_semantic(path: str) -> bool:
-        return any(seg.split("[")[0] in _SEMANTIC_LABELS
+        return any(seg.split("[")[0] in _SEMANTIC_CONTAINERS
                    for seg in path.lstrip("/").split("/"))
 
     # Pre-resolve all UPDATE targets before applying any DELETEs.
@@ -253,6 +253,7 @@ def apply_edit_script(root: Node, ops: list[EditOp]) -> Node:
         build_measurement_analysis,
         build_token_analysis,
         normalize_text,
+        preprocess_tree as _preprocess_tree,
     )
 
     def _rebuild_text_node(node: Node) -> None:
@@ -261,12 +262,18 @@ def apply_edit_script(root: Node, ops: list[EditOp]) -> Node:
             children = []
             d = build_date_analysis(node.value)
             if d:
+                # Recursively normalize leaf values inside the analysis subtree,
+                # matching what preprocess_tree does when it recurses into
+                # parsed_measurement / parsed_date / tokenized_value children.
+                _preprocess_tree(d, analyze_text=False)
                 children.append(d)
             m = build_measurement_analysis(node.value)
             if m:
+                _preprocess_tree(m, analyze_text=False)
                 children.append(m)
             t = build_token_analysis(node.value)
             if t:
+                _preprocess_tree(t, analyze_text=False)
                 children.append(t)
             node.children = children
             return  # don't recurse into the newly built children

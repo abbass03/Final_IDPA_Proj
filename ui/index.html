@@ -16,6 +16,7 @@
     <div class="nav-tabs">
         <button class="nav-btn active" data-section="comparison">Project 1 — Comparison</button>
         <button class="nav-btn" data-section="clustering">Project 2 — Clustering</button>
+        <button class="nav-btn" data-section="addcountry">Add Country</button>
     </div>
 </nav>
 
@@ -339,6 +340,70 @@
     </main>
 </div>
 </div><!-- /clusteringSection -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- ADD COUNTRY                                                           -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div id="addcountrySection" style="display:none">
+<div class="page-shell">
+
+    <aside class="control-panel">
+        <div class="brand-block">
+            <p class="eyebrow">Dataset Management</p>
+            <h1>Add Country</h1>
+            <p class="lede">Upload a new country XML to make it available for comparison (Project 1) and clustering (Project 2).</p>
+        </div>
+
+        <div class="control-card">
+            <label for="acName">Country name</label>
+            <input type="text" id="acName" class="param-input" placeholder="e.g. switzerland">
+            <p class="param-note">Will be normalised to snake_case automatically.</p>
+
+            <label style="margin-top:1rem">XML source</label>
+            <div class="ac-source-tabs">
+                <button class="ac-src-btn active" data-src="paste">Paste XML</button>
+                <button class="ac-src-btn" data-src="file">Upload file</button>
+            </div>
+
+            <div id="acPasteArea">
+                <textarea id="acXmlText" class="ac-xml-area" placeholder="Paste normalized XML here…&#10;&#10;Must start with &lt;?xml …&gt; and contain a &lt;country&gt; root element."></textarea>
+            </div>
+            <div id="acFileArea" style="display:none">
+                <input type="file" id="acFileInput" accept=".xml" class="ac-file-input">
+                <p id="acFileName" class="param-note" style="margin-top:.4rem">No file chosen.</p>
+            </div>
+
+            <button id="acSubmitBtn" class="primary-button run-btn" style="margin-top:1.2rem">Add Country</button>
+        </div>
+
+        <div class="control-card compact">
+            <h2>After adding</h2>
+            <ul class="feature-list">
+                <li><strong>Project 1</strong> — country appears in the source/target dropdowns immediately</li>
+                <li><strong>Project 2</strong> — country appears in the country list; distances are computed on-the-fly (may take a few seconds on first clustering run)</li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <section class="hero-panel">
+            <div>
+                <p class="eyebrow">Add Country</p>
+                <h2>Extend the dataset for the demo.</h2>
+            </div>
+            <div id="acStatusPill" class="status-pill idle">Ready</div>
+        </section>
+
+        <div id="acResult" class="ac-result-area">
+            <div class="ac-placeholder">
+                <p>Fill in the form on the left and click <strong>Add Country</strong>.</p>
+                <p style="margin-top:.5rem;color:var(--muted);font-size:.85rem">The country will be saved to <code>data/normalized_xml/</code> and registered with both pipelines.</p>
+            </div>
+        </div>
+    </main>
+</div>
+</div><!-- /addcountrySection -->
 
 <script src="app.js"></script>
 </body>

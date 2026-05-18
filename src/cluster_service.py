@@ -13,10 +13,16 @@ from typing import Any
 _ROOT = Path(__file__).resolve().parent.parent
 
 _MATRIX_PATH = _ROOT / "data" / "distance_matrix_preprocessed_chawathe.json"
+_XML_DIR = _ROOT / "data" / "normalized_xml"
 
 # module-level cache — loaded once per server process
 _cached_countries: list[str] | None = None
 _cached_matrix: list[list[int]] | None = None
+
+# Custom countries added at runtime (name → xml path)
+_custom_country_paths: dict[str, Path] = {}
+# Session-level on-the-fly distance cache: frozenset({a,b}) → dist
+_otf_distances: dict[frozenset, int] = {}
 
 
 def _ensure_loaded() -> tuple[list[str], list[list[int]]]:
@@ -31,19 +37,58 @@ def _ensure_loaded() -> tuple[list[str], list[list[int]]]:
     return _cached_countries, _cached_matrix
 
 
+def _load_tree(name: str):
+    """Load and preprocess a country tree from its XML file."""
+    import sys as _sys
+    _sys.path.insert(0, str(_ROOT / "src"))
+    from parser import parse_xml_file
+    from preprocess import preprocess_tree
+
+    if name in _custom_country_paths:
+        xml_path = _custom_country_paths[name]
+    else:
+        xml_path = _XML_DIR / f"{name}.xml"
+    return preprocess_tree(parse_xml_file(str(xml_path)))
+
+
+def _otf_distance(a: str, b: str) -> int:
+    """Compute TED distance on-the-fly (cached per session)."""
+    key = frozenset({a, b})
+    if key not in _otf_distances:
+        import sys as _sys
+        _sys.path.insert(0, str(_ROOT / "src"))
+        from ted import ted_distance_only
+        ta = _load_tree(a)
+        tb = _load_tree(b)
+        _otf_distances[key] = ted_distance_only(ta, tb, method="chawathe")
+    return _otf_distances[key]
+
+
+def register_custom_country(name: str, xml_path: Path) -> None:
+    """Register a newly uploaded country so it appears in available_countries()."""
+    _custom_country_paths[name] = xml_path
+
+
 def available_countries() -> list[str]:
     countries, _ = _ensure_loaded()
-    return countries
+    custom = [c for c in _custom_country_paths if c not in set(countries)]
+    return countries + sorted(custom)
 
 
 def extract_submatrix(selected: list[str]) -> list[list[int]]:
     all_countries, full = _ensure_loaded()
     idx = {c: i for i, c in enumerate(all_countries)}
-    missing = [c for c in selected if c not in idx]
-    if missing:
-        raise ValueError(f"Countries not in matrix: {missing[:5]}")
-    rows = [idx[c] for c in selected]
-    return [[full[r][c] for c in rows] for r in rows]
+    n = len(selected)
+    matrix = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):
+            ci, cj = selected[i], selected[j]
+            if ci in idx and cj in idx:
+                d = full[idx[ci]][idx[cj]]
+            else:
+                d = _otf_distance(ci, cj)
+            matrix[i][j] = matrix[j][i] = d
+    return matrix
 
 
 # ---------------------------------------------------------------------------

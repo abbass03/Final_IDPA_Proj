@@ -7,8 +7,15 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+import re
+
 from comparison_service import compare_documents
-from cluster_service import available_countries, extract_submatrix, run_clustering as _run_clustering
+from cluster_service import (
+    available_countries,
+    extract_submatrix,
+    register_custom_country,
+    run_clustering as _run_clustering,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -136,6 +143,64 @@ class UIRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+
+        if parsed.path == "/api/add_country":
+            content_length = int(self.headers.get("Content-Length", "0"))
+            raw_body = self.rfile.read(content_length)
+            try:
+                payload = json.loads(raw_body.decode("utf-8"))
+            except json.JSONDecodeError:
+                json_response(self, {"error": "Invalid JSON."}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            raw_name = str(payload.get("name", "")).strip().lower()
+            xml_content = str(payload.get("xml", "")).strip()
+
+            # Normalise name to snake_case
+            name = re.sub(r"[^a-z0-9]+", "_", raw_name).strip("_")
+            if not name:
+                json_response(self, {"error": "Country name is required."}, status=HTTPStatus.BAD_REQUEST)
+                return
+            if not xml_content:
+                json_response(self, {"error": "XML content is required."}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            # Basic XML syntax check
+            try:
+                import xml.etree.ElementTree as ET
+                ET.fromstring(xml_content)
+            except ET.ParseError as exc:
+                json_response(self, {"error": f"Invalid XML: {exc}"}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            dest = DATA_DIR / "normalized_xml" / f"{name}.xml"
+            dest.write_text(xml_content, encoding="utf-8")
+
+            # Preprocess and gather metadata
+            try:
+                import sys
+                sys.path.insert(0, os.fspath(PROJECT_ROOT / "src"))
+                from parser import parse_xml_file
+                from preprocess import preprocess_tree
+                from utils import count_nodes
+
+                tree = preprocess_tree(parse_xml_file(os.fspath(dest)))
+                node_count = count_nodes(tree)
+                fields = [c.label for c in tree.children]
+            except Exception as exc:
+                dest.unlink(missing_ok=True)
+                json_response(self, {"error": f"Parse/preprocess failed: {exc}"}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
+                return
+
+            register_custom_country(name, dest)
+            json_response(self, {
+                "name": name,
+                "path": f"data/normalized_xml/{name}.xml",
+                "node_count": node_count,
+                "fields": fields,
+            })
+            return
+
         if parsed.path == "/api/cluster/run":
             content_length = int(self.headers.get("Content-Length", "0"))
             raw_body = self.rfile.read(content_length)

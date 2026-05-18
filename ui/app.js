@@ -276,13 +276,14 @@ const cState = {
 };
 
 /* ── Section switcher ─────────────────────────────────────────────────── */
+const SECTIONS = ["comparison", "clustering", "addcountry"];
 document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         const sec = btn.dataset.section;
-        document.getElementById("comparisonSection").style.display  = sec === "comparison"  ? "" : "none";
-        document.getElementById("clusteringSection").style.display  = sec === "clustering"  ? "" : "none";
+        SECTIONS.forEach(s =>
+            document.getElementById(`${s}Section`).style.display = s === sec ? "" : "none");
     });
 });
 
@@ -800,6 +801,131 @@ async function initClustering() {
     } catch (e) {
         console.error("Could not load cluster countries:", e);
     }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ADD COUNTRY
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Source tab switcher (Paste / Upload file) ────────────────────────── */
+document.querySelectorAll(".ac-src-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".ac-src-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("acPasteArea").style.display = btn.dataset.src === "paste" ? "" : "none";
+        document.getElementById("acFileArea").style.display  = btn.dataset.src === "file"  ? "" : "none";
+    });
+});
+
+/* ── File input → populate textarea ──────────────────────────────────── */
+document.getElementById("acFileInput").addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+    document.getElementById("acFileName").textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById("acXmlText").value = e.target.result;
+        // switch to paste view so user can see/edit the content
+        document.querySelectorAll(".ac-src-btn").forEach(b =>
+            b.classList.toggle("active", b.dataset.src === "paste"));
+        document.getElementById("acPasteArea").style.display = "";
+        document.getElementById("acFileArea").style.display  = "none";
+    };
+    reader.readAsText(file);
+});
+
+/* ── Submit ───────────────────────────────────────────────────────────── */
+function setAcStatus(label, kind) {
+    const pill = document.getElementById("acStatusPill");
+    pill.textContent = label;
+    pill.className = `status-pill ${kind}`;
+}
+
+document.getElementById("acSubmitBtn").addEventListener("click", async () => {
+    const name = document.getElementById("acName").value.trim();
+    const xml  = document.getElementById("acXmlText").value.trim();
+
+    if (!name) { alert("Please enter a country name."); return; }
+    if (!xml)  { alert("Please provide XML content."); return; }
+
+    setAcStatus("Adding…", "loading");
+    document.getElementById("acSubmitBtn").disabled = true;
+
+    try {
+        const r = await fetch("/api/add_country", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, xml }),
+        });
+        const payload = await r.json();
+        if (!r.ok) throw new Error(payload.error || "Failed to add country.");
+
+        setAcStatus("Added", "success");
+        renderAcSuccess(payload);
+
+        // Refresh Project 1 file list
+        const optR = await fetch("/api/options");
+        state.options = await optR.json();
+        updateFileChoices();
+
+        // Refresh Project 2 country list
+        const cR = await fetch("/api/cluster/countries");
+        const cData = await cR.json();
+        const prevSelected = new Set(cState.selected);
+        cState.allCountries = cData.countries || [];
+        cState.selected = new Set([...prevSelected, payload.name]);
+        renderCountryList();
+        updateSelectionBadge();
+
+    } catch (err) {
+        setAcStatus("Error", "error");
+        renderAcError(err.message);
+    } finally {
+        document.getElementById("acSubmitBtn").disabled = false;
+    }
+});
+
+function renderAcSuccess(payload) {
+    const area = document.getElementById("acResult");
+    const fields = (payload.fields || []).slice(0, 30);
+    area.innerHTML = `
+        <div class="ac-success-card">
+            <div class="ac-success-header">
+                <span class="ac-check">&#10003;</span>
+                <strong>${payload.name}</strong> added successfully
+            </div>
+            <div class="ac-detail-grid">
+                <div class="ac-detail-item">
+                    <span class="ac-detail-label">Saved to</span>
+                    <code class="ac-detail-value">${payload.path}</code>
+                </div>
+                <div class="ac-detail-item">
+                    <span class="ac-detail-label">Total nodes</span>
+                    <span class="ac-detail-value">${payload.node_count}</span>
+                </div>
+                <div class="ac-detail-item">
+                    <span class="ac-detail-label">Fields (${payload.fields.length})</span>
+                    <span class="ac-detail-value ac-fields">${fields.map(f =>
+                        `<span class="country-chip">${f}</span>`).join("")}${
+                        payload.fields.length > 30 ? `<span class="country-chip">+${payload.fields.length - 30} more</span>` : ""
+                    }</span>
+                </div>
+            </div>
+            <div class="ac-availability">
+                <div class="ac-avail-item ac-avail-ok">
+                    <span>&#10003;</span> Project 1 — available in comparison dropdowns now
+                </div>
+                <div class="ac-avail-item ac-avail-ok">
+                    <span>&#10003;</span> Project 2 — pre-selected in clustering panel; distances computed on first run
+                </div>
+            </div>
+        </div>`;
+}
+
+function renderAcError(msg) {
+    document.getElementById("acResult").innerHTML =
+        `<div class="ac-error-card"><strong>Error:</strong> ${msg}</div>`;
 }
 
 
