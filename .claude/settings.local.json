@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python -m pip freeze)",
-      "Bash(python -c ' *)",
-      "Bash(python src/build_distance_matrix.py --quick 10 --method chawathe --force)"
-    ]
-  }
-}
